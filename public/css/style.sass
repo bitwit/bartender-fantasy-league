@@ -1,0 +1,642 @@
+@import 'compass'
+@import 'compass/reset'
+@import 'open-iconic'
+
+$font-size: 16
+// Your base font-size in pixels
+$em: $font-size / 1em
+// Shorthand for outputting ems
+
+$color-grey-dark: #333
+$color-grey-medium-dark: #454545
+$color-grey: #888
+$color-grey-light: #CDCDCD
+$color-grey-ultra-light: #EDEDED
+
+//Color Scheme, new
+$color-pink: #d8a9d2
+$color-purple: #adaddc
+$color-blue: #add9e0
+$color-yellow: #fbdd8e
+$color-red: #d77167
+$color-green: #cad68a
+$color-green-dark: #b0ad64
+$color-beige: #dcd095
+$color-brown: #cda575
+$color-orange-medium: #d99c77
+$color-red-medium: #d48567
+
+$color-orange-light: rgb(240, 205, 192)
+$color-orange-dark: rgb(240, 120, 72)
+
+*
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+html
+  height: 100%
+  overflow: hidden
+
+body
+  font:
+    size: $font-size * 1px
+    family: Helvetica Neue, Helvetica, Arial, sans-serif
+    weight: 300
+  overflow: hidden
+  height: 100%
+
+h1, h2, h3, h4, h5, h6
+  font:
+    weight: 500
+  text-align: center
+
+h1
+  margin: 20/$em 0
+  font-size: 32/$em
+
+h2
+  margin: 20/$em 0
+  font-size: 28/$em
+
+h3
+  margin: 10/$em 0
+  font-size: 24/$em
+
+.ng-cloak
+  display: none
+
+.type-dev
+  color: $color-purple
+  background-color: $color-purple
+  border-color: $color-purple
+
+.type-res
+  color: $color-blue
+  background-color: $color-blue
+  border-color: $color-blue
+
+.type-mkt
+  color: $color-brown
+  background-color: $color-brown
+  border-color: $color-brown
+
+.type-sal
+  color: $color-red
+  background-color: $color-red
+  border-color: $color-red
+
+.type-des
+  color: $color-pink
+  background-color: $color-pink
+  border-color: $color-pink
+
+.type-fun
+  color: $color-green-dark
+  background-color: $color-green-dark
+  border-color: $color-green-dark
+
+div.views
+  height: 100%
+  overflow: hidden
+
+  @media all and (max-width: 1200px)
+    font-size: 80%
+
+
+div.view-container
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+
+div.intro-view, div.end-view
+  height: 100%
+  overflow: hidden
+  background-color: $color-grey-dark
+  &.ng-enter,
+  &.ng-leave
+    +single-transition(all, 0.80s, ease-out, 0s)
+
+  &.ng-leave.ng-leave-active,
+  &.ng-enter
+    left: -100%
+
+  &.ng-leave,
+  &.ng-enter.ng-enter-active
+    left: 0
+
+h1.intro-title
+  font-size: 42/$em
+  color: $color-yellow
+  span.lemon-drop
+    font-size: 64/$em
+
+button.game-start
+  display: block
+  cursor: pointer
+  outline: none
+  margin: 0 auto
+  font-size: 16/$em
+  width: 300/$em
+  height: 80/$em
+  background: none
+  border: 2/$em solid $color-green-dark
+  color: $color-green-dark
+  &:hover
+    border-color: $color-green
+    color: $color-green
+  span.title
+    font-size: 24/$em
+
+div.ending
+  color: $color-yellow
+  width: 40%
+  margin: 0 auto
+  text-align: center
+
+  span.ending-icon
+    font-size: 96/$em
+
+  p.ending-description
+    margin: 20/$em 0
+    font-size: 28/$em
+
+h2.end-title
+  font-size: 42/$em
+
+h3.end-title
+  font-size: 32/$em
+  color: $color-yellow
+  span.lemon-drop
+    font-size: 24/$em
+
+
+div.main-view
+  &.ng-enter,
+  &.ng-leave
+    +single-transition(all, 0.80s, ease-out, 0s)
+
+  &.ng-leave.ng-leave-active,
+  &.ng-enter
+    left: 100%
+
+  &.ng-leave,
+  &.ng-enter.ng-enter-active
+    left: 0
+
+h1.main-title, h2.section-title
+  color: $color-yellow
+
+div.tasks-column
+  float: left
+  width: 15%
+  height: 100%
+  background-color: $color-grey-dark
+
+div.instructions
+  margin: 40/$em auto
+  width: 40%
+  color: white
+  ul.instructions
+    list-style-type: decimal
+  li.instruction
+    margin-bottom: 14/$em
+
+div.main-column
+  position: relative
+  float: left
+  width: 70%
+  height: 100%
+  padding: 0 0 0 1%
+  box-sizing: border-box
+  background-color: $color-grey-medium-dark
+
+div.credits
+  width: 90%
+  position: absolute
+  color: #fff
+  font-size: 80%
+  padding: 4/$em 5%
+  a.credit
+    color: $color-blue
+
+div.twitter-tweet-button
+  float: left
+
+p.developed-by
+  float: right
+
+div.status-column
+  float: left
+  box-sizing: border-box
+  width: 15%
+  padding: 0 10/$em
+  background-color: $color-grey-dark
+  color: #FFF
+
+h3.sub-title
+  color: $color-yellow
+
+div.jobs
+  box-sizing: border-box
+
+div.forecast
+  text-align: center
+  color: #FFF
+  div.weather-conditions
+    position: relative
+  div.weather-condition
+    font-size: 18/$em
+    margin: 0 20/$em 8/$em
+
+div.task, div.job, div.asset
+  position: relative
+  cursor: move
+  margin: 10/$em
+  border: 1/$em solid #fff
+  +border-radius(3/$em)
+  padding: 6/$em
+  height: 24/$em
+  color: $color-grey-dark
+  line-height: 24/$em
+  text-overflow: ellipsis
+  white-space: nowrap
+  overflow: hidden
+  &:hover
+    color: $color-orange-dark
+    background: $color-orange-light
+
+div.job
+  margin: 0 auto 10/$em
+  width: 75%
+  left: 0
+  +single-transition(left, 0.16s, linear, 0s !important)
+
+  &.selected-true, &.selected-true.selected-true-add-active
+    left: 20/$em
+  &.selected-false.selected-false-add-active
+    left: 0
+
+  &.ui-draggable-dragging
+    -webkit-transition: none !important
+    transition: none !important
+
+  span.title
+    display: inline-block
+    font-size: 13/$em
+    text:
+      indent: 6/$em
+      transform: capitalize
+
+  .hotkey-button
+    float: right
+
+div.task
+  span.title
+    font-size: 14/$em
+    text-transform: capitalize
+  span.delete
+    display: block
+    position: absolute
+    height: 100%
+    width: 20/$em
+    line-height: 36/$em
+    top: 0
+    right: 0
+    cursor: pointer
+    text-align: center
+    &:hover
+      font-weight: bold
+
+div.calendar
+  overflow: hidden
+
+div.days
+  box-sizing: border-box
+  margin-top: 72/$em
+
+div.price-selector
+  overflow: hidden
+  width: 80%
+  margin: 60/$em 10% 0
+  color: $color-green
+
+  h3.price-title
+    margin: 0 0 10/$em
+    span.title
+      font-size: 24/$em
+
+  strong.price-mark
+    text-align: center
+    width: 10%
+    display: block
+    float: left
+    font-size: 36/$em
+
+  input.price-input
+    float: left
+    margin: 20/$em 0
+    outline: none
+    cursor: ew-resize
+    width: 80%
+    display: inline-block
+
+  input[type='range'] 
+    -webkit-appearance: none
+    border-radius: 5/$em
+    background-color: #999
+    height: 10/$em
+    vertical-align: middle
+
+  input[type='range']::-moz-range-track 
+    -moz-appearance: none
+    border-radius: 5/$em
+    background-color: #999
+    height: 10/$em
+
+  input[type='range']::-webkit-slider-thumb
+    -webkit-appearance: none !important
+    -moz-appearance: none
+    border-radius: 20/$em
+    height: 80/$em
+    width: 80/$em
+    font-size: 16/$em
+    &:after
+      position: relative
+      top: 4/$em
+      content: "\e055"
+      display: block
+      color: $color-yellow
+      font:
+        family: Icons, sans-serif
+        size: 48/$em
+      text-align: center
+
+  input[type='range']::-moz-range-thumb
+    -webkit-appearance: none !important
+    -moz-appearance: none
+    border-radius: 20/$em
+    height: 80/$em
+    width: 80/$em
+    font-size: 16/$em
+    &:after
+      position: relative
+      top: 4/$em
+      content: "\e055"
+      display: block
+      color: $color-yellow
+      font:
+        family: Icons, sans-serif
+        size: 48/$em
+      text-align: center
+
+div.price
+  float: left
+  width: 10%
+  text-align: right
+
+h2.sprint-title
+  color: $color-grey-dark
+  box-sizing: border-box
+  margin: 0
+  border: 2/$em solid $color-yellow
+  border-bottom: 1/$em solid $color-yellow
+  background-color: lighten($color-yellow, 10%)
+  width: 98%
+  padding: 10/$em 0
+
+div.day
+  &.full-true
+    cursor: pointer
+  cursor: cell
+  color: $color-grey-dark
+  box-sizing: border-box
+  position: relative
+  border: 2/$em solid $color-yellow
+  background-color: lighten($color-yellow, 20%)
+  width: 14%
+  height: 140/$em
+  float: left
+  &:hover
+    background-color: lighten($color-yellow, 5%)
+  &:nth-child(7n+1)
+    clear: left
+
+  div.message
+    position: absolute
+    z-index: 9 //above calendary, below announcements
+    padding: 10/$em
+    box-sizing: border-box
+    width: 100%
+    height: 100%
+    background: #fff
+    //border: 2/$em solid $color-yellow
+    opacity: 0.8
+    text-align: left
+    line-height: 28/$em
+    font-size: 100%
+    +single-transition(all, 0.44s, linear, 0s !important)
+    &.showing-true, &.showing-true-add, &.showing-true-add-active
+      opacity: 1
+      //top: -100%
+    &.showing-false
+      opacity: 0
+      pointer-events: none
+    &.showing-false-add, &.showing-false-add-active
+      opacity: 0 !important
+      //top: 0 !important
+    ul.items
+      margin-top: 6/$em
+    li.oi
+      span.title
+        display: none
+
+  .positive-true
+    color: $color-green-dark
+  .positive-false
+    color: $color-red
+
+  ul.task-placeholders
+    position: absolute
+    top: 30/$em
+    left: 10/$em
+
+  li.task-placeholder
+    margin-bottom: 40/$em
+
+
+
+div.day-progress-meter
+  position: absolute
+  top: 0
+  left: 0
+  height: 100%
+  background-color: $color-green
+
+h5.day-name
+  position: relative
+  z-index: 9
+
+div.cash
+  overflow: hidden
+  font:
+    weight: 500
+    size: 22/$em
+  text-align: center
+  color: $color-green
+  .positive-false
+    color: $color-red
+
+
+  h3.cash-title
+    text-decoration: underline
+    font-size: 22/$em
+    margin-bottom: 0
+    span.title
+      font-size: 65%
+  strong.cash-value
+    display: block
+    font-size: 18/$em
+    margin: 2/$em 0 10/$em
+
+div.assets
+  position: relative
+  box-sizing: border-box
+  height: 800/$em
+
+div.assets-container
+  position: relative
+
+div.asset
+  position: absolute
+  width: 100%
+  margin: 0
+  box-sizing: border-box
+  height: 36/$em
+  overflow: visible
+  +single-transition(all, 0.24s, linear, 0s)
+  opacity: 1
+
+  // &.ng-enter,
+  // &.ng-leave
+  //   +single-transition(all, 0.24s, linear, 0s)
+
+  // &.ng-leave.ng-leave-active,
+  // &.ng-enter
+  //   opacity: 0
+
+  // &.ng-leave,
+  // &.ng-enter.ng-enter-active
+  //   opacity: 1
+
+  span.expiry
+    display: block
+    float: right
+
+div.announcements
+  position: absolute
+  z-index: 10
+  width: 100%
+  height: 100%
+  top: 0
+  left: 0
+
+  &.displaying-false
+    display: none
+    pointer-events: none
+
+div.announcement
+  //above calendar elements
+  box-sizing: border-box
+  margin: 2% auto 0
+  border-width: 10/$em
+  border-style: solid
+  padding: 0 40/$em
+  width: 500/$em
+  height: 660/$em
+  background-color: #FFF
+  text-align: center
+
+  &.ng-enter,
+  &.ng-leave
+    +single-transition(opacity, 0.80s, ease-out, 0s)
+
+  &.ng-leave.ng-leave-active,
+  &.ng-enter
+    opacity: 0
+
+  &.ng-leave,
+  &.ng-enter.ng-enter-active
+    opacity: 1
+
+  h2.event-title
+    padding: 10/$em 0
+    background-color: inherit
+    border-width: 4/$em
+    border-style: double
+    color: $color-grey-dark
+
+  div.oi
+    font-size: 256/$em
+    color: inherit
+
+  p.description
+    font-size: 28/$em
+    color: $color-grey-dark
+    margin-top: 10/$em
+
+  button.accept, button.reject
+    outline: none
+    cursor: pointer
+    font-size: 16/$em
+    margin: 20/$em 0
+    padding: 10/$em 0
+    border: 2/$em dotted inherit
+    +border-radius(4/$em)
+    width: 47.5%
+    background: none
+    span
+      font-size: 28/$em
+    &:hover
+      opacity: 0.85
+      .hotkey-button
+        display: inline-block
+
+    .hotkey-button
+      display: none
+      margin-top: 4/$em
+      color: $color-grey-dark
+      font-size: 16/$em
+
+  button.accept
+    color: $color-green-dark
+    margin-right: 5%
+
+  button.reject
+    color: $color-red
+
+.hotkey-button
+  line-height: 24/$em
+  border: 1px solid gray
+  padding: 0 5px
+  margin: 0 5px
+  font-size: 0.8em
+  text-transform: uppercase
+  -webkit-box-shadow: 1px 0 1px 0 #fff, 0 2px 0 2px lightGray, 0 2px 0 3px #333
+  -moz-box-shadow: 1px 0 1px 0 #fff, 0 2px 0 2px lightGray, 0 2px 0 3px #333
+  box-shadow: 1px 0 1px 0 #fff, 0 2px 0 2px lightGray, 0 2px 0 3px #333
+  -webkit-border-radius: 3px
+  -moz-border-radius: 3px
+  border-radius: 3px
+  background: -moz-linear-gradient(left, #ffffff 0%, #e2e2e2 25%)
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ffffff), color-stop(25%, #e2e2e2))
+  background: -webkit-linear-gradient(left, #ffffff 0%, #e2e2e2 25%)
+  background: -o-linear-gradient(left, #ffffff 0%, #e2e2e2 25%)
+  background: -ms-linear-gradient(left, #ffffff 0%, #e2e2e2 25%)
+  background: linear-gradient(left, #ffffff 0%, #e2e2e2 25%)
+
