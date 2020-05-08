@@ -27,7 +27,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { AppState } from '../State'
 
-export default Vue.component('ls-end-section', {
+export default Vue.component('end-section', {
   filters: {
     number: function (value: string, decimals: string) {
       if (!value) { return '' } 
@@ -40,11 +40,6 @@ export default Vue.component('ls-end-section', {
     cashValuePositiveClass: function (state: AppState) {
       const obj: any = {}
       obj[`positive-${state.businessObject.stats.cash > 0}`] = true
-      return obj
-    },
-    projectedValuePositiveClass: function (state: AppState) {
-      const obj: any = {}
-      obj[`positive-${state.businessObject.stats.projectedValue > 0}`] = true
       return obj
     }
   }),

@@ -1,48 +1,43 @@
-import * as JobCards from './cards/job-cards'
-import { EventCard } from './cards/event-cards'
+import EventCard from './cards/EventCard'
 import { BusinessObject } from './BusinessObject'
-import { VictoryCondition } from './cards/victory-conditions'
-import { Day } from './classes/Day'
+import VictoryCondition from './cards/VictoryCondition'
+import Season from './classes/Season'
+import Week from './classes/Week'
+import Bartender from './classes/Bartender'
+import Ingredient from './classes/Ingredient'
 
 export class AppState {
-  sprintDays: Day[] = [
-    new Day("1", "Monday"),
-    new Day("2", "Tuesday"),
-    new Day("3", "Wednesday"),
-    new Day("4", "Thursday"),
-    new Day("5", "Friday"),
-    new Day("6", "Saturday"),
-    new Day("7", "Sunday"),
-    new Day("8", "Monday"),
-    new Day("9", "Tuesday"),
-    new Day("10", "Wednesday"),
-    new Day("11", "Thursday"),
-    new Day("12", "Friday"),
-    new Day("13", "Saturday"),
-    new Day("14", "Sunday")
+
+  seasons: Season[] = [
+    new Season("1", "Year 1 Season 1 - Fall/Winter"),
+    new Season("2", "Year 1 Season 2 - Spring/Summer"),
+    new Season("3", "Year 2 Season 1 - Fall/Winter"),
+    new Season("4", "Year 2 Season 2 - Spring/Summer"),
+    new Season("5", "Year 3 Season 1 - Fall/Winter"),
+    new Season("6", "Year 3 Season 2 - Spring/Summer")
   ]
-  tasks: JobCards.Card[] = [
-    new JobCards.DevelopmentCard(), 
-    new JobCards.ResearchCard(), 
-    new JobCards.MarketingCard(), 
-    new JobCards.DesignCard(), 
-    new JobCards.SalesCard(), 
-    new JobCards.FundraisingCard()
+  weeks: Week[] = [
+    new Week("1", "Week 1"),
+    new Week("2", "Week 2"),
+    new Week("3", "Week 3"),
+    new Week("4", "Week 4"),
+    //TODO: 20 more weeks for a full seaons
   ]
 
-  prices = [0, 0.5, 1, 1.5, 2, 3, 4, 5, 7, 10]
   currentView = 'intro'
-  price = 3
-  sprint = 1
-  maxSprints = 4
-  currentDay = -1
+  announcements: EventCard[] = []
+  businessObject = new BusinessObject()
+  ending: VictoryCondition | null = null
+
+  selectedBartenders = <Bartender[]>[]
+  specialDrink = <Ingredient[]>[]
+  currentSeasonIndex = 0
+  currentWeekIndex = 0
+
+  // Timer related
   progress = 0
   hasStarted = false
   tickSpeed = 25
   isPaused = false
-  selectedTaskIndex = 0
   countdownProgress = 0
-  announcements: EventCard[] = []
-  businessObject = new BusinessObject()
-  ending: VictoryCondition | null = null
 }

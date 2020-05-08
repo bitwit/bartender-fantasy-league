@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { AppState } from './State'
-import { Day } from './classes/Day'
-import { Card } from './cards/job-cards'
-import { EventCard } from './cards/event-cards'
+import Season from './classes/Season'
+import EventCard from './cards/EventCard'
 import { clone } from './utilities'
+import Bartender from './classes/Bartender'
+import Ingredient from './classes/Ingredient'
 
 Vue.use(Vuex)
 
@@ -14,10 +15,11 @@ export default new Vuex.Store({
   mutations: {
     startSimulation: function (state: AppState) {
       state.hasStarted = true
-      state.currentDay = 0
-      const day = state.sprintDays[state.currentDay]
-      day.price = state.prices[state.price]
-      day.isInteractive = true
+      state.currentSeasonIndex = 0
+      state.currentWeekIndex = 0
+      const week = state.weeks[state.currentWeekIndex]
+      // day.price = state.prices[state.price]
+      // day.isInteractive = true
     },
     resetCountdown: function (state: AppState) {
       state.countdownProgress = 10000 
@@ -28,30 +30,18 @@ export default new Vuex.Store({
     switchView: function (state: AppState, newView: string) {
       state.currentView = newView
     },
-    nextSprint: function (state: AppState) {
-      state.sprint++
-      if(state.sprint > state.maxSprints) {
+    nextSeason: function (state: AppState) {
+      state.currentSeasonIndex++
+      if(state.currentSeasonIndex >= state.seasons.length) {
         const endResult = state.businessObject.processEndGame()
         state.ending = endResult
         state.currentView = 'end'
       }
       else {
-        state.currentDay = -1
+        state.currentWeekIndex = 0
         state.progress = 0
-        for (let i = 0; i < state.sprintDays.length; i++) {
-          const day = state.sprintDays[i]
-          day.result = null
-          day.tasks.length = 0
-          day.isInteractive = true
-        }
-      }
-    },
-    autoPopulateDays: function (state: AppState) {
-      for (let i = 0; i < state.sprintDays.length; i++) {
-        const day = state.sprintDays[i]
-        while(day.tasks.length < 2) {
-          state.selectedTaskIndex = Math.floor((Math.random() * 6))
-          day.tasks.push(clone(state.tasks[state.selectedTaskIndex]))
+        for(let week of state.weeks) {
+          week.result = null
         }
       }
     },
@@ -63,33 +53,37 @@ export default new Vuex.Store({
     },
     tick: function (state: AppState) {
       state.progress += 0.1
-      let didCompleteDay = false
+      let didCompleteWeek = false
       if(state.progress > 10) {
-        didCompleteDay = true
-        const day = state.sprintDays[state.currentDay]
-        const result = state.businessObject.dayComplete(
-          day,
+        didCompleteWeek = true
+        const season = state.seasons[state.currentSeasonIndex]
+        const week = state.weeks[state.currentWeekIndex]
+        const result = state.businessObject.weekComplete(
+          season,
+          week,
           (event: EventCard) => {
             state.announcements.length = 0
             state.announcements.push(event)
           }
         )
-        day.result = result.dayHistory
+        week.result = result.weekHistory
         state.isPaused = result.didTriggerEvent
         state.progress = 0.1
-        state.currentDay++
+        state.currentWeekIndex++
       }
 
-      if(state.currentDay > 13) {
-        state.businessObject.sprintComplete(state.sprint)
+      // Did season complete?
+      if(state.currentWeekIndex >= state.weeks.length) {
+        const season = state.seasons[state.currentSeasonIndex]
+        state.businessObject.seasonComplete(season)
       }
-      else {
-        if(didCompleteDay) {
-          const day = state.sprintDays[state.currentDay]
-          const newPrice = state.prices[state.price]
-          day.price = newPrice
-          day.isInteractive = false
-        }
+      else if(didCompleteWeek) {
+        const week = state.weeks[state.currentWeekIndex]
+        // const newPrice = state.prices[state.price]
+        // day.price = newPrice
+        // day.isInteractive = false
+      } else {
+        // just a mid-week tick, nothing else
       }
     },
 
@@ -97,34 +91,14 @@ export default new Vuex.Store({
       state.isPaused = false
     },
 
-    updatePrice: function (state: AppState, price: number) {
-      state.price = price
+    setBartendersSelection: function (state: AppState, bartenders: Bartender[]) {
+      state.selectedBartenders = bartenders
     },
 
-    setSelectedTaskIndex: function (state: AppState, index: number) {
-
-      state.selectedTaskIndex = index
+    setSpecialDrink: function (state: AppState, drink: Ingredient[]) {
+      state.specialDrink = drink
     },
 
-    addSelectedTaskToDay: function (state: AppState, day: Day) {
-      if (day.tasks.length < 2 && day.isInteractive) {
-        const task = clone(state.tasks[state.selectedTaskIndex])
-        day.tasks.push(task)
-      }
-    },
-
-    removeTaskFromDay: function (state: AppState, payload) {
-      console.log('remove task', arguments)
-      const leftOverTasks: Card[] = []
-      for (let i = 0; i < payload.day.tasks.length; i++) {
-        const task = payload.day.tasks[i]
-        if(payload.task != task) {
-          leftOverTasks.push(task)
-        }
-      }
-      payload.day.tasks = leftOverTasks
-    },
-    
     acceptFirstEvent: function (state: AppState) {
       const event = state.announcements.shift()
       if(!event) { return }
@@ -163,9 +137,9 @@ export default new Vuex.Store({
 
     tick: function (context) {
       context.commit('tick')
-      if(context.state.currentDay > 13) {
+      if(context.state.currentWeekIndex >= context.state.weeks.length) {
         setTimeout(() => { 
-          context.dispatch('nextSprint') 
+          context.dispatch('nextSeason') 
         }, 3000)
       }
       else if(!context.state.isPaused) {
@@ -192,8 +166,8 @@ export default new Vuex.Store({
         context.dispatch('tick')
       }
     },
-    nextSprint: function (context) {
-      context.commit('nextSprint')
+    nextSeason: function (context) {
+      context.commit('nextSeason')
       context.dispatch('startCountdown')
     }
   }
