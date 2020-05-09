@@ -26,7 +26,6 @@ export default new Vuex.Store({
       state.currentView = 'drink-building'
     },
     nextSeason: function (state: AppState) {
-      console.log('incrementing season, before>', state.currentSeasonIndex)
       state.currentSeasonIndex++
       state.currentWeekIndex = 0
       state.progress = 0
@@ -62,7 +61,6 @@ export default new Vuex.Store({
       state.isPaused = result.didTriggerEvent
       state.progress = 0.1
       state.currentWeekIndex++
-      console.log('week index', state.currentWeekIndex)
       // Did season complete?
       if(state.currentWeekIndex >= state.weeks.length) {
         const season = state.seasons[state.currentSeasonIndex]

@@ -62,6 +62,7 @@ export default Vue.component('drink-building-section', {
     onIngredientSelected: function(index: number) {
         this.currentCategoryIngredientIndex = index
         this.ingredientSelections.push(this.category.ingredients[index])
+        this.$store.commit('setSpecialDrink', this.ingredientSelections)
         this.nextCategory()
     },
     onIngredientSelectionComplete: function () {

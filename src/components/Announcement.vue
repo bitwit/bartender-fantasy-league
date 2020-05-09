@@ -47,7 +47,7 @@ export default Vue.component('ls-announcement', {
 /* line 541, style.sass */
 div.announcements {
   position: absolute;
-  z-index: 10;
+  z-index: 9999;
   width: 100%;
   height: 100%;
   top: 0;

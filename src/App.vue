@@ -17,21 +17,13 @@
       </div>
 
       <div class="column center-column">
-
-          <h2 class="sprint-title">
-            <span class="title">{{ season.name }}&nbsp;{{week.name}}</span>
-          </h2>
-
-          <div class="bar-background">
-            <div class="bar-work-area">
-              <bartender-character v-for="bartender in bartenders" :key="bartender.id" :bartender="bartender" />
-            </div>
-          </div>
-
-          <div class="bar-foreground"></div>
+        <bar-space />
       </div>
 
       <div class="column right-column">
+          <h2 class="sprint-title">
+            <span class="title">{{ season.name }}&nbsp;{{week.name}}</span>
+          </h2>
         <game-stats-section v-if="currentView == 'main'"/>
       </div>
 
@@ -68,6 +60,8 @@ import AnnouncementView from './components/Announcement.vue'
 import AssetView from './components/Asset.vue'
 import BartenderView from './components/Bartender.vue'
 import BartenderCharacterView from './components/BartenderCharacter.vue'
+import PatronCharacterView from './components/PatronCharacter.vue'
+import BarSpaceView from './components/BarSpace.vue'
 
 export default Vue.extend({
   name: 'App',
@@ -81,7 +75,9 @@ export default Vue.extend({
     AnnouncementView, 
     AssetView, 
     BartenderView,
-    BartenderCharacterView
+    BartenderCharacterView,
+    PatronCharacterView,
+    BarSpaceView
   },
  created: function () {
     document.addEventListener('keydown', (e) => {
@@ -93,7 +89,6 @@ export default Vue.extend({
   computed: Vuex.mapState({
     announcements: function (state: AppState) { return state.announcements },
     barName: function (state: AppState) { return state.barName },
-    bartenders: function(state: AppState) { return state.selectedBartenders },
     currentView: function (state: AppState) { return state.currentView },
     drinkSpecial: function(state: AppState) { return state.drinkSpecial },
     season: function (state: AppState) { 
@@ -106,7 +101,6 @@ export default Vue.extend({
       console.log('week index', state.currentWeekIndex)
       return state.weeks[state.currentWeekIndex] 
     },
-
     countdownProgress: function (state: AppState) { return state.countdownProgress },
     progress: function (state: AppState) { return state.progress },
   }),
@@ -118,14 +112,6 @@ export default Vue.extend({
     handleKeyDown: function (key: string) {
       // console.log('keydown happened', key)
       switch (key) {
-        case "1":
-        case "2":
-        case "3":
-        case "4":
-        case "5":
-        case "6":
-          this.$store.commit('setSelectedTaskIndex', (parseInt(key) - 1))
-          break
         case "Escape":
           this.rejectEvent()
           break
@@ -207,36 +193,10 @@ body { height: 100% }
   }
 }
 
-.bar-background {
-  margin-top: 70pt;
-  background: url(../public/img/bar-background.png) no-repeat;
-  width: 758px;
-  height: 104px;
-}
-.bar-foreground {
-  background: url(../public/img/bar-foreground.png) no-repeat;
-  width: 758px;
-  height: 173px;
-
-  position: relative;
-  z-index: 10;
-}
-.bar-work-area {
-  margin: 0 22%;
-  display: flex;
-  justify-content: space-around;
-
-  .bartender-character {
-    position: relative;
-    top: -80px;
-  }
-}
-
-
 /* line 541, style.sass */
 div.modal-sections {
   position: absolute;
-  z-index: 10;
+  z-index: 9999;
   width: 100%;
   height: 100%;
   top: 0;
@@ -250,10 +210,9 @@ div.modal-container {
   border-width: 0.625em;
   border-style: solid;
   padding: 0 2.5em;
-  width: 75%;
+  width: 66%;
   height: 75%;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
   text-align: center;
 }
-
 </style>
