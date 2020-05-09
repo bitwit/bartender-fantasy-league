@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { AppState } from './State'
+import AppState from './AppState'
 import Season from './classes/Season'
 import EventCard from './cards/EventCard'
-import { clone } from './utilities'
 import Bartender from './classes/Bartender'
 import Ingredient from './classes/Ingredient'
 
@@ -13,14 +12,6 @@ export default new Vuex.Store({
   state: new AppState(),
   
   mutations: {
-    startSimulation: function (state: AppState) {
-      state.hasStarted = true
-      state.currentSeasonIndex = 0
-      state.currentWeekIndex = 0
-      const week = state.weeks[state.currentWeekIndex]
-      // day.price = state.prices[state.price]
-      // day.isInteractive = true
-    },
     resetCountdown: function (state: AppState) {
       state.countdownProgress = 10000 
     },
@@ -30,19 +21,16 @@ export default new Vuex.Store({
     switchView: function (state: AppState, newView: string) {
       state.currentView = newView
     },
+    prepareForNextSeason: function (state: AppState) {
+      state.currentView = 'drink-building'
+    },
     nextSeason: function (state: AppState) {
+      console.log('incrementing season, before>', state.currentSeasonIndex)
       state.currentSeasonIndex++
-      if(state.currentSeasonIndex >= state.seasons.length) {
-        const endResult = state.businessObject.processEndGame()
-        state.ending = endResult
-        state.currentView = 'end'
-      }
-      else {
-        state.currentWeekIndex = 0
-        state.progress = 0
-        for(let week of state.weeks) {
-          week.result = null
-        }
+      state.currentWeekIndex = 0
+      state.progress = 0
+      for(let week of state.weeks) {
+        week.result = null
       }
     },
     tickCountdown: function (state: AppState) {
@@ -91,6 +79,10 @@ export default new Vuex.Store({
       state.isPaused = false
     },
 
+    setBarName: function(state: AppState, barName: string) {
+      state.barName = barName
+    },
+
     setBartendersSelection: function (state: AppState, bartenders: Bartender[]) {
       state.selectedBartenders = bartenders
     },
@@ -98,7 +90,7 @@ export default new Vuex.Store({
     setSpecialDrink: function (state: AppState, drink: Ingredient[]) {
       state.specialDrink = drink
     },
-
+    
     acceptFirstEvent: function (state: AppState) {
       const event = state.announcements.shift()
       if(!event) { return }
@@ -109,7 +101,14 @@ export default new Vuex.Store({
     rejectFirstEvent: function (state: AppState) {
       const event = state.announcements.shift()
       event?.onReject(state.businessObject)
+    },
+
+    processEndGame: function (state: AppState) {
+      const endResult = state.businessObject.processEndGame()
+      state.ending = endResult
+      state.currentView = 'end'
     }
+
   },
       
   actions: {
@@ -124,25 +123,26 @@ export default new Vuex.Store({
         context.dispatch('startSimulation')
       }
       else {
-        setTimeout( () => {
+        setTimeout(() => {
           context.dispatch('tickCountdown')
         }, context.state.tickSpeed)
       }
     },
 
     startSimulation: function (context) {
-      context.commit('startSimulation')
+      console.log("start simulation")
       context.dispatch('tick')
     },
 
     tick: function (context) {
       context.commit('tick')
       if(context.state.currentWeekIndex >= context.state.weeks.length) {
-        setTimeout(() => { 
-          context.dispatch('nextSeason') 
-        }, 3000)
-      }
-      else if(!context.state.isPaused) {
+        if( context.state.currentSeasonIndex >= context.state.seasons.length) {
+          context.commit('processEndGame')
+        } else {
+          context.commit('prepareForNextSeason')
+        }
+      } else if(!context.state.isPaused) {
         setTimeout(() => {
           context.dispatch('tick')
         }, context.state.tickSpeed)

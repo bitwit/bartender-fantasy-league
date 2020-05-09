@@ -25,7 +25,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { AppState } from '../State'
+import AppState from '../AppState'
 
 export default Vue.component('end-section', {
   filters: {

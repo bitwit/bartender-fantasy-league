@@ -1,12 +1,12 @@
 <template>
   <div class="intro-view view-container">
-    <h1 class="intro-title">
+    <h3 class="intro-title">
       <br>Running {{finalBarName}} for 3 years
       <br>
       <br>Prove yourself
       <br>
       <br>Don't make the owner angry
-    </h1>
+    </h3>
     <label for="barName">Name your bar</label>
     <input type="text" v-model="barName" name="barName"/>
 
@@ -32,9 +32,20 @@ export default Vue.component('intro-section', {
   }),
   methods: {
     newGame: function () {
+      this.$store.commit('setBarName', this.barName)
       this.$store.commit('switchView', 'bartender-selection')
       this.$store.dispatch('startCountdown')
     }
   }
 })
 </script>
+
+<style lang="scss">
+label {
+  display: block;
+}
+.game-start {
+  display: block;
+  margin: 0 auto;
+}
+</style>

@@ -6,7 +6,7 @@ import Week from './classes/Week'
 import Bartender from './classes/Bartender'
 import Ingredient from './classes/Ingredient'
 
-export class AppState {
+export default class AppState {
 
   seasons: Season[] = [
     new Season("1", "Year 1 Season 1 - Fall/Winter"),
@@ -29,9 +29,11 @@ export class AppState {
   businessObject = new BusinessObject()
   ending: VictoryCondition | null = null
 
+  // User choices
+  barName: String = "Some Random Bar"
   selectedBartenders = <Bartender[]>[]
   specialDrink = <Ingredient[]>[]
-  currentSeasonIndex = 0
+  currentSeasonIndex = -1
   currentWeekIndex = 0
 
   // Timer related

@@ -72,7 +72,7 @@ export default Vue.component('drink-building-section', {
     onIngredientSelectionComplete: function () {
       this.$store.commit('setSpecialDrink', this.ingredientSelections)
       this.$store.commit('switchView', 'main')
-      this.$store.dispatch('startCountdown')
+      this.$store.dispatch('nextSeason')
     }
   }
 })
@@ -93,10 +93,11 @@ export default Vue.component('drink-building-section', {
 
 .ingredient {
   background-color: white;
+  border: 1px solid #999;
   color: #333;
   width: 100pt;
   height: 100pt;
-  margin: auto;
+  margin: 0 auto 20px;
   cursor: pointer;
   &:hover {
     color: cornflowerblue;

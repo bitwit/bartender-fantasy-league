@@ -8,8 +8,9 @@ export default class Bartender {
   difficulty: Difficulty = Difficulty.Easy
   description: string = ""
 
-  constructor(id: string, name: string) {
+  constructor(id: string, name: string, description: string = "") {
     this.id = id
     this.name = name
+    this.description = description
   }
 }

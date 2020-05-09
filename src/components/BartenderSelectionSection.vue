@@ -1,16 +1,30 @@
 <template>
   <div class="intro-view view-container">
-    <h1 class="intro-title">Bartender Selection</h1>
+    <h1 class="intro-title">Select 3 Bartenders</h1>
 
-    <div class="bartenders">
-      <div class="bartender-container" v-for="(bartender, index) in bartenders" @click="onBartenderSelected(index)" :key="bartender.id">
-        <bartender :bartender="bartender" :class="bartenderClass(index)"></bartender>
+    <div class="picker-area">
+      <div class="bartenders-area">
+        <div class="bartender-container" 
+          v-for="(bartender, index) in bartenders" 
+          @click="onBartenderSelected(index)"
+          @mouseenter="mouseoverBartenderIndex = index" 
+          :key="bartender.id">
+          <bartender :bartender="bartender" :class="bartenderClass(index)"></bartender>
+        </div>
+      </div>
+      <div class=info-area>
+        <div class="bartender-description-container">
+          <div v-if="mouseoverBartenderIndex != -1" class="bartender-description">
+            <bartender :bartender="bartenders[mouseoverBartenderIndex]"></bartender>
+            <h5>{{bartenders[mouseoverBartenderIndex].description}}</h5>
+          </div>
+        </div>
+        <button v-if="bartenderSelectionIndices.length >= 3" @click="onSubmit()" class="next-button">
+          <span class="title">Go</span>
+        </button>
       </div>
     </div>
 
-    <button @click="onSubmit()" class="game-start">
-      <span class="title">Go</span>
-    </button>
   </div>
 </template>
 
@@ -22,17 +36,18 @@ import Bartender from '../classes/Bartender'
 export default Vue.component('bartender-selection-section', {
   data: function () {
     return {
+      mouseoverBartenderIndex: -1,
       bartenderSelectionIndices: <number[]>[],
       bartenders: [
-        new Bartender("kyle1", "Kyle"),
-        new Bartender("kyle2", "Elyk"),
-        new Bartender("kyle3", "Joe"),
-        new Bartender("kyle4", "Eugene"),
-        new Bartender("kyle5", "George"),
-        new Bartender("kyle6", "Jerry"),
-        new Bartender("kyle7", "Bertha"),
-        new Bartender("kyle8", "Henry"),
-        new Bartender("kyle9", "The Goat"),
+        new Bartender("kyle1", "Kyle", "A Cool Guy"),
+        new Bartender("kyle2", "Elyk", "A Weird Guy"),
+        new Bartender("kyle3", "Joe", "A Dope Guy"),
+        new Bartender("kyle4", "Eugene", "A Smelly Guy"),
+        new Bartender("kyle5", "George", "An Athletic Guy"),
+        new Bartender("kyle6", "Jerry", "A Stoner Guy"),
+        new Bartender("kyle7", "Bertha", "A Loser Guy"),
+        new Bartender("kyle8", "Henry", "Another Guy"),
+        new Bartender("kyle9", "The Goat", "A Goat"),
       ]
     }
   },
@@ -67,11 +82,24 @@ export default Vue.component('bartender-selection-section', {
 })
 </script>
 <style lang="scss">
-.bartenders {
+
+.picker-area {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.bartenders-area {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 0 20%;
+  width: 70%;
+}
+
+.info-area {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
 }
 
 .bartender-container {
@@ -83,4 +111,18 @@ export default Vue.component('bartender-selection-section', {
     background-color: green;
   }
 }
+
+.bartender-description-container {
+  height: 80%;
+}
+
+.bartender-description {
+
+}
+
+.next-button {
+  width: 100%;
+  height: 20%;
+}
+
 </style>
