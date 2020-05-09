@@ -52,7 +52,7 @@ export default class AppState {
 
   // Timer related
   progress: number = 0
-  tickSpeed: number = 25
+  tickSpeed: number = 10
   isPaused: boolean = false
   countdownProgress: number = 0
 

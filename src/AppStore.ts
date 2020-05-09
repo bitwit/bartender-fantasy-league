@@ -13,7 +13,7 @@ export default new Vuex.Store({
   
   mutations: {
     resetCountdown: function (state: AppState) {
-      state.countdownProgress = 10000 
+      state.countdownProgress = 2000 
     },
     clearAnnouncements: function (state: AppState) {
       state.announcements.length = 0
@@ -22,6 +22,7 @@ export default new Vuex.Store({
       state.currentView = newView
     },
     prepareForNextSeason: function (state: AppState) {
+      state.currentWeekIndex = 0
       state.currentView = 'drink-building'
     },
     nextSeason: function (state: AppState) {
@@ -61,6 +62,7 @@ export default new Vuex.Store({
       state.isPaused = result.didTriggerEvent
       state.progress = 0.1
       state.currentWeekIndex++
+      console.log('week index', state.currentWeekIndex)
       // Did season complete?
       if(state.currentWeekIndex >= state.weeks.length) {
         const season = state.seasons[state.currentSeasonIndex]
@@ -73,6 +75,10 @@ export default new Vuex.Store({
     },
 
     setBarName: function(state: AppState, barName: string) {
+      if(barName === "") {
+        state.barName = "Some Random Bar"
+        return
+      }
       state.barName = barName
     },
 

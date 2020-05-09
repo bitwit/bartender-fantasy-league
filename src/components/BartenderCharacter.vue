@@ -1,7 +1,7 @@
 <template>
   <div class="bartender-character">
     <div class="bartender-head" :style="headStyles"></div>
-    <div class="bartender-body" :style="bodyStyles"></div>
+    <div class="bartender-body"></div>
   </div>
 </template>
 

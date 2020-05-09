@@ -1,7 +1,7 @@
 <template>
   <div class="intro-view view-container">
     <h2>Name your bar</h2>
-    <input type="text" v-model="barName" name="barName"/>
+    <input type="text" v-model="barName" @keyup="nameChanged" name="barName"/>
 
     <button @click="newGame()" class="game-start">
       <span class="title">Let's do this</span>
@@ -24,6 +24,10 @@ export default Vue.component('intro-section', {
     }
   }),
   methods: {
+    nameChanged: function () {
+      console.log('name changed')
+      this.$store.commit('setBarName', this.barName)
+    },
     newGame: function () {
       this.$store.commit('setBarName', this.barName)
       this.$store.commit('switchView', 'bartender-selection')

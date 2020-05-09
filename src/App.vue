@@ -102,7 +102,10 @@ export default Vue.extend({
       }
       return state.seasons[state.currentSeasonIndex] 
     },
-    week: function (state: AppState) { return state.weeks[state.currentWeekIndex] },
+    week: function (state: AppState) { 
+      console.log('week index', state.currentWeekIndex)
+      return state.weeks[state.currentWeekIndex] 
+    },
 
     countdownProgress: function (state: AppState) { return state.countdownProgress },
     progress: function (state: AppState) { return state.progress },
