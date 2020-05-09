@@ -5,7 +5,10 @@
     <h2>Pick your {{category.name}}</h2>
     <div class="ingredients-container">
       <div class="ingredient-container" v-for="(ingredient, index) in category.ingredients" :key="ingredient.id">
-        <div class="ingredient" :class="ingredientClass(index)" @click="onIngredientSelected(index)">
+        <div class="ingredient" 
+          :class="ingredientClass(index)" 
+          :style="ingredientStyles"
+          @click="onIngredientSelected(index)">
           <h3>{{ingredient.name}}</h3>
         </div>
       </div>
@@ -35,6 +38,11 @@ export default Vue.component('drink-building-section', {
     categories: function (state: AppState) {
       //TODO: randomize the order of categories and ingredients
       return state.ingredientCategories
+    },
+    ingredientStyles: function() {
+      return {
+        'background-image': `url(./img/default-${this.category.id}.png)`,
+      } 
     }
   }),
   methods: {
@@ -71,7 +79,7 @@ export default Vue.component('drink-building-section', {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin: 0 20%;
+  margin: 0 10%;
 }
 
 .ingredient-container {
@@ -80,10 +88,14 @@ export default Vue.component('drink-building-section', {
 
 .ingredient {
   background-color: white;
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+
   border: 1px solid #999;
   color: #333;
-  width: 100pt;
-  height: 100pt;
+  width: 80pt;
+  height: 80pt;
   margin: 0 auto 20px;
   cursor: pointer;
   &:hover {

@@ -1,13 +1,6 @@
 <template>
   <div class="intro-view view-container">
-    <h3 class="intro-title">
-      <br>Running {{finalBarName}} for 3 years
-      <br>
-      <br>Prove yourself
-      <br>
-      <br>Don't make the owner angry
-    </h3>
-    <label for="barName">Name your bar</label>
+    <h2>Name your bar</h2>
     <input type="text" v-model="barName" name="barName"/>
 
     <button @click="newGame()" class="game-start">
@@ -34,7 +27,6 @@ export default Vue.component('intro-section', {
     newGame: function () {
       this.$store.commit('setBarName', this.barName)
       this.$store.commit('switchView', 'bartender-selection')
-      this.$store.dispatch('startCountdown')
     }
   }
 })

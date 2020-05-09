@@ -15,14 +15,12 @@
       <div class=info-area>
         <div class="bartender-description-container">
           <div v-if="mouseoverBartenderIndex != -1" class="bartender-description">
-            <bartender :bartender="bartenders[mouseoverBartenderIndex]"></bartender>
+            <bartender-character :bartender="bartenders[mouseoverBartenderIndex]">
+            </bartender-character>
             <h3>Difficulty: {{bartenders[mouseoverBartenderIndex].difficulty}}</h3>
             <p>{{bartenders[mouseoverBartenderIndex].description}}</p>
           </div>
         </div>
-        <button v-if="bartenderSelectionIndices.length >= 3" @click="onSubmit()" class="next-button">
-          <span class="title">Go</span>
-        </button>
       </div>
     </div>
 
@@ -61,6 +59,9 @@ export default Vue.component('bartender-selection-section', {
         return
       }
       this.bartenderSelectionIndices.push(index)
+      if (this.bartenderSelectionIndices.length >= 3) {
+        this.onSubmit()
+      }
     },
     onSubmit: function () {
       let bartenders = <Bartender[]>[]
@@ -100,7 +101,7 @@ export default Vue.component('bartender-selection-section', {
 
 .bartender {
   &.selected-true {
-    background-color: green;
+    border: 5px solid red;
   }
 }
 

@@ -77,7 +77,7 @@ export default class AppState {
       CSVtoJSON().fromString(misc),
       CSVtoJSON().fromString(garnish),
     ])
-    .then(([bartenders, events, spirits, garnishes, miscs, mods, fruits]) => {
+    .then(([bartenders, events, spirits, mods, fruits, miscs, garnishes]) => {
       this.ingredientCategories = [
         new IngredientCategory("spirits", "Spirits", spirits),
         new IngredientCategory("mods", "Mods", mods),
