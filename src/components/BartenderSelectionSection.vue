@@ -16,7 +16,8 @@
         <div class="bartender-description-container">
           <div v-if="mouseoverBartenderIndex != -1" class="bartender-description">
             <bartender :bartender="bartenders[mouseoverBartenderIndex]"></bartender>
-            <h5>{{bartenders[mouseoverBartenderIndex].description}}</h5>
+            <h3>Difficulty: {{bartenders[mouseoverBartenderIndex].difficulty}}</h3>
+            <p>{{bartenders[mouseoverBartenderIndex].description}}</p>
           </div>
         </div>
         <button v-if="bartenderSelectionIndices.length >= 3" @click="onSubmit()" class="next-button">
@@ -31,27 +32,18 @@
 <script lang="ts">
 import Vue from 'vue'
 import Vuex, { mapState } from 'vuex'
+import AppState from '../AppState'
 import Bartender from '../classes/Bartender'
 
 export default Vue.component('bartender-selection-section', {
   data: function () {
     return {
       mouseoverBartenderIndex: -1,
-      bartenderSelectionIndices: <number[]>[],
-      bartenders: [
-        new Bartender("kyle1", "Kyle", "A Cool Guy"),
-        new Bartender("kyle2", "Elyk", "A Weird Guy"),
-        new Bartender("kyle3", "Joe", "A Dope Guy"),
-        new Bartender("kyle4", "Eugene", "A Smelly Guy"),
-        new Bartender("kyle5", "George", "An Athletic Guy"),
-        new Bartender("kyle6", "Jerry", "A Stoner Guy"),
-        new Bartender("kyle7", "Bertha", "A Loser Guy"),
-        new Bartender("kyle8", "Henry", "Another Guy"),
-        new Bartender("kyle9", "The Goat", "A Goat"),
-      ]
+      bartenderSelectionIndices: <number[]>[]
     }
   },
   computed: mapState({
+    bartenders: function(state: AppState) { return state.bartenders }
   }),
   methods: {
     bartenderClass: function(index: number) {

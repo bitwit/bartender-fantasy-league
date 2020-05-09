@@ -6,9 +6,11 @@ export default class IngredientCategory {
   description: string = ""
   ingredients: Ingredient[] = []
 
-  constructor(id: string, name: string, ingredients: Ingredient[] = []) {
+  constructor(id: string, name: string, ingredientData: any[] = []) {
     this.id = id
     this.name = name
-    this.ingredients = ingredients
+    for(let ingData of ingredientData) {
+      this.ingredients.push(new Ingredient(ingData))
+    }
   }
 }

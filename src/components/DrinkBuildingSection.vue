@@ -18,28 +18,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import IngredientCategory from '../classes/IngredientCategory'
 import Ingredient from '../classes/Ingredient'
+import AppState from '../AppState'
 
 export default Vue.component('drink-building-section', {
   data: function() {
     return {
-      //TODO: randomize the order of categories and ingredients
-      categories: <IngredientCategory[]>[
-        new IngredientCategory("garnish", "Garnish", [
-          new Ingredient("mint", "Mint"),
-          new Ingredient("grapefruit-peel", "Grapefruit Peel"),
-          new Ingredient("orange-peel", "Orange Peel"),
-          new Ingredient("lime-wheel", "Lime Wheel"),
-          new Ingredient("lemon-wheel", "Lemon Wheel"),
-        ]),
-        new IngredientCategory("fruit", "Fruit", [
-          new Ingredient("lime", "Lime"),
-          new Ingredient("lemon", "Lemon"),
-          new Ingredient("grapefruit", "Grapefruit"),
-          new Ingredient("orange", "Orange"),
-          new Ingredient("pineapple", "Pineapple"),
-          new Ingredient("apple", "Apple")
-        ])
-      ],
       currentCategoryIndex: 0,
       currentCategoryIngredientIndex: -1,
       ingredientSelections: <Ingredient[]>[]
@@ -48,6 +31,10 @@ export default Vue.component('drink-building-section', {
   computed: Vuex.mapState({
     category: function () {
       return this.categories[this.currentCategoryIndex]
+    },
+    categories: function (state: AppState) {
+      //TODO: randomize the order of categories and ingredients
+      return state.ingredientCategories
     }
   }),
   methods: {
@@ -83,12 +70,12 @@ export default Vue.component('drink-building-section', {
 .ingredients-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin: 0 20%;
 }
 
 .ingredient-container {
-  width: 33%;
+  width: 16.6%;
 }
 
 .ingredient {

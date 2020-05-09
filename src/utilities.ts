@@ -40,3 +40,11 @@ const Device = {
 };
 
 Device.isMobile = Device.isAndroid || Device.isIOS;
+
+/* data loading */
+export function httpGet(url: string) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}

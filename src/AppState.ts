@@ -5,6 +5,9 @@ import Season from './classes/Season'
 import Week from './classes/Week'
 import Bartender from './classes/Bartender'
 import Ingredient from './classes/Ingredient'
+import CSVtoJSON  from 'csvtojson'
+import { httpGet } from './utilities'
+import IngredientCategory from './classes/IngredientCategory'
 
 export default class AppState {
 
@@ -24,6 +27,9 @@ export default class AppState {
     //TODO: 20 more weeks for a full seaons
   ]
 
+  bartenders = <Bartender[]>[]
+  ingredientCategories = <IngredientCategory[]>[]
+
   currentView = 'intro'
   announcements: EventCard[] = []
   businessObject = new BusinessObject()
@@ -42,4 +48,39 @@ export default class AppState {
   tickSpeed = 25
   isPaused = false
   countdownProgress = 0
+
+  constructor() {
+    console.log("loading csvs")
+    /* CSV Loading */
+    let bartenders = httpGet('./data/TOGAMEJAM2020 - Bartenders.csv')
+    let spirits = httpGet('./data/TOGAMEJAM2020 - Ingredients (Spirits).csv')
+    let garnish = httpGet('./data/TOGAMEJAM2020 - Ingredients (Garnish).csv')
+    let misc = httpGet('./data/TOGAMEJAM2020 - Ingredients (Misc).csv')
+    let mods = httpGet('./data/TOGAMEJAM2020 - Ingredients (Mods).csv')
+    let fruit = httpGet('./data/TOGAMEJAM2020 - Ingredients (Fruit).csv')
+
+    let csv = CSVtoJSON()
+    Promise.all([
+      CSVtoJSON().fromString(bartenders),
+      CSVtoJSON().fromString(spirits),
+      CSVtoJSON().fromString(mods),
+      CSVtoJSON().fromString(fruit),
+      CSVtoJSON().fromString(misc),
+      CSVtoJSON().fromString(garnish),
+    ])
+    .then(([bartenders, spirits, garnishes, miscs, mods, fruits]) => {
+      this.ingredientCategories = [
+        new IngredientCategory("spirits", "Spirits", spirits),
+        new IngredientCategory("mods", "Mods", mods),
+        new IngredientCategory("fruit", "Fruit", fruits),
+        new IngredientCategory("misc", "misc", miscs),
+        new IngredientCategory("garnish", "Garnish", garnishes),
+      ]
+
+      for(let data of bartenders) {
+        this.bartenders.push(new Bartender(data))
+      }
+    })
+
+  }
 }
