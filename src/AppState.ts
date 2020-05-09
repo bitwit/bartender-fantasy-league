@@ -1,6 +1,6 @@
-import EventCard from './cards/EventCard'
+import EventCard from './classes/EventCard'
 import { BusinessObject } from './BusinessObject'
-import VictoryCondition from './cards/VictoryCondition'
+import VictoryCondition from './classes/VictoryCondition'
 import Season from './classes/Season'
 import Week from './classes/Week'
 import Bartender from './classes/Bartender'
@@ -19,20 +19,7 @@ export default class AppState {
     new Season("5", "Year 3 Season 1 - Fall/Winter", true),
     new Season("6", "Year 3 Season 2 - Spring/Summer")
   ]
-  weeks: Week[] = [
-    new Week("1", "Week 1"),
-    new Week("2", "Week 2"),
-    new Week("3", "Week 3"),
-    new Week("4", "Week 4"),
-    new Week("5", "Week 5"),
-    new Week("6", "Week 6"),
-    new Week("7", "Week 7"),
-    new Week("8", "Week 8"),
-    new Week("9", "Week 9"),
-    new Week("10", "Week 10"),
-    new Week("11", "Week 11"),
-    //TODO: 22 more weeks for a full seaons
-  ]
+  weeks: Week[] = []
 
   bartenders: Bartender[] = []
   ingredientCategories: IngredientCategory[] = []
@@ -57,7 +44,8 @@ export default class AppState {
   countdownProgress: number = 0
 
   constructor() {
-    console.log("loading csvs")
+    this.populateWeeks()
+
     /* CSV Loading */
     let bartenders = httpGet('./data/TOGAMEJAM2020 - Bartenders.csv')
     let events = httpGet('./data/TOGAMEJAM2020 - Events.csv')
@@ -95,6 +83,11 @@ export default class AppState {
         this.events.push(new EventCard(data))
       }
     })
+  }
 
+  populateWeeks() {
+    for(let i = 1; i <= 26; i++) {
+      this.weeks.push(new Week(`${i}`, `Week ${i}`))
+    }
   }
 }

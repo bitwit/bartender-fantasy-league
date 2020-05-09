@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import AppState from './AppState'
 import Season from './classes/Season'
-import EventCard from './cards/EventCard'
+import EventCard from './classes/EventCard'
 import Bartender from './classes/Bartender'
 import Ingredient from './classes/Ingredient'
 

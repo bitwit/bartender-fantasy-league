@@ -7,9 +7,12 @@ export default class EventCard {
   expiryInWeeks: number
   description: string
   cost: number
+  cash: number
   baseCustomersMod: number
   priceMod: number // price per drink sold
   prerequisiteEvents: string[]
+  minSeason: number
+  minWeek: number
   isRejectable: boolean
   acceptText: string
   rejectText: string
@@ -20,10 +23,13 @@ export default class EventCard {
     this.expiryInWeeks = parseInt(data.expiryInWeeks || 1)
     this.description = data.description || ""
     this.cost = parseInt(data.cost || 0)
+    this.cash = parseInt(data.cash || 0)
     this.baseCustomersMod = parseInt(data.baseCustomersMod || 0)
     this.priceMod = parseInt(data.priceCostMod || 0)
     this.prerequisiteEvents = (data.prerequisiteEvents?.split(",") || []).filter((x: string) => {x != ""})
-    this.isRejectable = !!data.isRejectable
+    this.minSeason = parseInt(data.minSeason || 0)
+    this.minWeek = parseInt(data.minWeek || 0)
+    this.isRejectable = data.isRejectable === "1" ? true : false
     this.acceptText = data.acceptText || "OK"
     this.rejectText = data.rejectText || "Pass"
   }
@@ -32,10 +38,14 @@ export default class EventCard {
     state: AppState
   ): boolean {
 
-    console.log("met conditions?")
-
     // must have all the cash required
     if (state.businessObject.stats.cash < this.cost) {
+      return false
+    }
+
+    //must meet minimum week conditions
+    let weekTotal = (state.currentWeekIndex + 1) * (state.currentSeasonIndex + 1)
+    if (weekTotal < this.minWeek) {
       return false
     }
     
@@ -62,30 +72,19 @@ export default class EventCard {
     }
 
     return hasMetTriggerConditions
-    // let thresholdsMet = true
-    // const thresholds: any = this.thresholds
-    // const currentStats: any = business.stats
-    // for(let statName in this.thresholds) {
-    //   let value = thresholds[statName]
-    //   if (value != 0 && value > currentStats[statName]) {
-    //     thresholdsMet = false
-    //   }
-    // }
-    // return thresholdsMet
   }
 
   tick(business: BusinessObject): void {
+    business.stats.cash += this.cash
     if (this.expiryInWeeks === -1) {
       return
     }
-    else {
-      this.expiryInWeeks--
-      if (this.expiryInWeeks <= 0) {
-        const index = business.assets.indexOf(this)
-        business.assets.splice(index, 1)
-        business.expiredAssets.push(this)
-        this.onDestroy(business)
-      }
+    this.expiryInWeeks--
+    if (this.expiryInWeeks <= 0) {
+      const index = business.assets.indexOf(this)
+      business.assets.splice(index, 1)
+      business.expiredAssets.push(this)
+      this.onDestroy(business)
     }
   }
 

@@ -1,17 +1,21 @@
 <template>
-    <div v-bind:class="typeClass" class="announcement">
-    <h2 v-bind:class="typeClass" class="event-title">
+    <div :class="typeClass" class="announcement">
+    <h2 :class="typeClass" class="event-title">
       <span class="title">{{event.name}}</span>
     </h2>
-    <div v-bind:data-glyph="event.icon" class="oi"></div>
+    <div class="oi"></div>
     <p class="description">{{event.description}}</p>
-    <button v-bind:class="typeClass" v-on:click="acceptEvent()" class="accept">
-      <span data-glyph="check" class="title oi">{{event.acceptText}}</span>
+    <button :class="typeClass" @click="acceptEvent()" class="accept">
+      <span class="title oi">{{event.acceptText}}</span>
       <br>
       <span class="hotkey-button">space</span>
     </button>
-    <button v-bind:class="typeClass" v-on:click="rejectEvent()" class="reject">
-      <span data-glyph="x" class="title oi">{{event.rejectText}}</span>
+    <button 
+      v-if="event.isRejectable"
+      :class="typeClass" 
+      @click="rejectEvent()" 
+      class="reject">
+      <span class="title oi">{{event.rejectText}}</span>
       <br>
       <span class="hotkey-button">esc</span>
     </button>
@@ -121,7 +125,7 @@ div.announcement {
         display: inline-block; }
     /* line 610, style.sass */
     div.announcement button.accept .hotkey-button, div.announcement button.reject .hotkey-button {
-      display: none;
+      display: inline-block;
       margin-top: 0.25em;
       color: #333;
       font-size: 1em; }
@@ -153,5 +157,4 @@ div.announcement {
   background: -o-linear-gradient(left, #ffffff 0%, #e2e2e2 25%);
   background: -ms-linear-gradient(left, #ffffff 0%, #e2e2e2 25%);
   background: linear-gradient(to right, #ffffff 0%, #e2e2e2 25%); }
-
 </style>

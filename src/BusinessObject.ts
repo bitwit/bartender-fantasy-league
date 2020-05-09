@@ -1,6 +1,6 @@
 import { shuffle, clone } from './utilities'
-import VictoryCondition from './cards/VictoryCondition'
-import EventCard from './cards/EventCard'
+import VictoryCondition from './classes/VictoryCondition'
+import EventCard from './classes/EventCard'
 import Season from './classes/Season'
 import Week from './classes/Week'
 import AppState from './AppState'
