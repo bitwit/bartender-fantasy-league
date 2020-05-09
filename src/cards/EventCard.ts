@@ -55,7 +55,7 @@ export default class EventCard {
         hasMetTriggerConditions = true
       }
     }
-    for (let bartender of state.bartenders) {
+    for (let bartender of state.selectedBartenders) {
       if (bartender.event === this.id) {
         hasMetTriggerConditions = true
       }
