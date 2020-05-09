@@ -73,10 +73,6 @@ export default class EventCard {
       }
     }
 
-    // if (this.id == "noshow2") {
-    //   debugger;
-    // }
-
     if(this.prerequisiteBartender != null) {
       hasMetTriggerConditions = false
     }

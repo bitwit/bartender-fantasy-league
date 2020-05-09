@@ -40,7 +40,7 @@ export default new Vuex.Store({
       }
     },
     tick: function (state: AppState) {
-      state.progress += 3.0
+      state.progress += state.progressInterval
       if(state.progress <= 10) {
         return
       }
@@ -60,7 +60,7 @@ export default new Vuex.Store({
       )
       week.result = result.weekHistory
       state.isPaused = result.didTriggerEvent
-      state.progress = 0.1
+      state.progress = state.progressInterval
       state.currentWeekIndex++
       // Did season complete?
       if(state.currentWeekIndex >= state.weeks.length) {
