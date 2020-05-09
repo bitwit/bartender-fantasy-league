@@ -41,37 +41,30 @@ export default new Vuex.Store({
     },
     tick: function (state: AppState) {
       state.progress += 0.1
-      let didCompleteWeek = false
-      if(state.progress > 10) {
-        didCompleteWeek = true
-        const season = state.seasons[state.currentSeasonIndex]
-        const week = state.weeks[state.currentWeekIndex]
-        const result = state.businessObject.weekComplete(
-          season,
-          week,
-          (event: EventCard) => {
-            state.announcements.length = 0
-            state.announcements.push(event)
-          }
-        )
-        week.result = result.weekHistory
-        state.isPaused = result.didTriggerEvent
-        state.progress = 0.1
-        state.currentWeekIndex++
+      if(state.progress <= 10) {
+        return
       }
-
+      //Week has completed
+      const season = state.seasons[state.currentSeasonIndex]
+      const week = state.weeks[state.currentWeekIndex]
+      const result = state.businessObject.weekComplete(
+        state,
+        season,
+        week,
+        (event: EventCard) => {
+          state.events.splice(state.events.indexOf(event), 1)
+          state.announcements.length = 0
+          state.announcements.push(event)
+        }
+      )
+      week.result = result.weekHistory
+      state.isPaused = result.didTriggerEvent
+      state.progress = 0.1
+      state.currentWeekIndex++
       // Did season complete?
       if(state.currentWeekIndex >= state.weeks.length) {
         const season = state.seasons[state.currentSeasonIndex]
         state.businessObject.seasonComplete(season)
-      }
-      else if(didCompleteWeek) {
-        const week = state.weeks[state.currentWeekIndex]
-        // const newPrice = state.prices[state.price]
-        // day.price = newPrice
-        // day.isInteractive = false
-      } else {
-        // just a mid-week tick, nothing else
       }
     },
 
@@ -88,7 +81,7 @@ export default new Vuex.Store({
     },
 
     setSpecialDrink: function (state: AppState, drink: Ingredient[]) {
-      state.specialDrink = drink
+      state.drinkSpecial = drink
     },
     
     acceptFirstEvent: function (state: AppState) {
@@ -160,11 +153,10 @@ export default new Vuex.Store({
     },
 
     resumeSimulation: function (context) {
-      if(context.state.hasStarted) {
-        context.commit('clearAnnouncements')
-        context.commit('unpause')
-        context.dispatch('tick')
-      }
+      console.log('resuming simulation')
+      context.commit('clearAnnouncements')
+      context.commit('unpause')
+      context.dispatch('tick')
     },
     nextSeason: function (context) {
       context.commit('nextSeason')

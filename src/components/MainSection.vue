@@ -5,8 +5,8 @@
         <br>
         <span class="title">{{barName.split(" ").join("\n")}}</span>
       </h1>
-      <h4>Seasonal Drink</h4>
-      <p>{{specialDrink.map(x => x.name).join(", ")}}</p>
+      <h4>Drink Special</h4>
+      <p>{{drinkSpecial.map(x => x.name).join(", ")}}</p>
     </div>
 
     <div class="column center-column">
@@ -58,7 +58,7 @@ export default Vue.component('main-section', {
   computed: Vuex.mapState({
     barName: function (state: AppState) { return state.barName },
     bartenders: function(state: AppState) { return state.selectedBartenders },
-    specialDrink: function(state: AppState) { return state.specialDrink },
+    drinkSpecial: function(state: AppState) { return state.drinkSpecial },
 
     season: function (state: AppState) { return state.seasons[state.currentSeasonIndex] },
     week: function (state: AppState) { return state.weeks[state.currentWeekIndex] },

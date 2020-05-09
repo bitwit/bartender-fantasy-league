@@ -13,7 +13,7 @@ export default class Bartender {
     this.id = data.id
     this.name = data.name
     this.description = data.description
-    this.multiplier = data.multiplier
+    this.multiplier = parseInt(data.multiplier)
     this.difficulty = data.difficulty
     this.event = data.event
   }

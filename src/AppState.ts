@@ -12,11 +12,11 @@ import IngredientCategory from './classes/IngredientCategory'
 export default class AppState {
 
   seasons: Season[] = [
-    new Season("1", "Year 1 Season 1 - Fall/Winter"),
+    new Season("1", "Year 1 Season 1 - Fall/Winter", true),
     new Season("2", "Year 1 Season 2 - Spring/Summer"),
-    new Season("3", "Year 2 Season 1 - Fall/Winter"),
+    new Season("3", "Year 2 Season 1 - Fall/Winter", true),
     new Season("4", "Year 2 Season 2 - Spring/Summer"),
-    new Season("5", "Year 3 Season 1 - Fall/Winter"),
+    new Season("5", "Year 3 Season 1 - Fall/Winter", true),
     new Season("6", "Year 3 Season 2 - Spring/Summer")
   ]
   weeks: Week[] = [
@@ -24,11 +24,19 @@ export default class AppState {
     new Week("2", "Week 2"),
     new Week("3", "Week 3"),
     new Week("4", "Week 4"),
-    //TODO: 20 more weeks for a full seaons
+    new Week("5", "Week 5"),
+    new Week("6", "Week 6"),
+    new Week("7", "Week 7"),
+    new Week("8", "Week 8"),
+    new Week("9", "Week 9"),
+    new Week("10", "Week 10"),
+    new Week("11", "Week 11"),
+    //TODO: 22 more weeks for a full seaons
   ]
 
-  bartenders = <Bartender[]>[]
-  ingredientCategories = <IngredientCategory[]>[]
+  bartenders: Bartender[] = []
+  ingredientCategories: IngredientCategory[] = []
+  events: EventCard[] = []
 
   currentView = 'intro'
   announcements: EventCard[] = []
@@ -38,21 +46,21 @@ export default class AppState {
   // User choices
   barName: String = "Some Random Bar"
   selectedBartenders = <Bartender[]>[]
-  specialDrink = <Ingredient[]>[]
+  drinkSpecial = <Ingredient[]>[]
   currentSeasonIndex = -1
   currentWeekIndex = 0
 
   // Timer related
-  progress = 0
-  hasStarted = false
-  tickSpeed = 25
-  isPaused = false
-  countdownProgress = 0
+  progress: number = 0
+  tickSpeed: number = 25
+  isPaused: boolean = false
+  countdownProgress: number = 0
 
   constructor() {
     console.log("loading csvs")
     /* CSV Loading */
     let bartenders = httpGet('./data/TOGAMEJAM2020 - Bartenders.csv')
+    let events = httpGet('./data/TOGAMEJAM2020 - Events.csv')
     let spirits = httpGet('./data/TOGAMEJAM2020 - Ingredients (Spirits).csv')
     let garnish = httpGet('./data/TOGAMEJAM2020 - Ingredients (Garnish).csv')
     let misc = httpGet('./data/TOGAMEJAM2020 - Ingredients (Misc).csv')
@@ -62,13 +70,14 @@ export default class AppState {
     let csv = CSVtoJSON()
     Promise.all([
       CSVtoJSON().fromString(bartenders),
+      CSVtoJSON().fromString(events),
       CSVtoJSON().fromString(spirits),
       CSVtoJSON().fromString(mods),
       CSVtoJSON().fromString(fruit),
       CSVtoJSON().fromString(misc),
       CSVtoJSON().fromString(garnish),
     ])
-    .then(([bartenders, spirits, garnishes, miscs, mods, fruits]) => {
+    .then(([bartenders, events, spirits, garnishes, miscs, mods, fruits]) => {
       this.ingredientCategories = [
         new IngredientCategory("spirits", "Spirits", spirits),
         new IngredientCategory("mods", "Mods", mods),
@@ -79,6 +88,11 @@ export default class AppState {
 
       for(let data of bartenders) {
         this.bartenders.push(new Bartender(data))
+      }
+
+      let cleanEvents = events.filter((x:any) => { return x.id != "" })
+      for(let data of cleanEvents) {
+        this.events.push(new EventCard(data))
       }
     })
 

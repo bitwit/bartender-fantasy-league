@@ -13,8 +13,8 @@ export default class Ingredient {
   constructor(data: any) {
     this.id = data.id
     this.name = data.name
-    this.valueWinter = data.valueWinter
-    this.valueSummer = data.valueSummer
+    this.valueWinter = parseInt(data.valueWinter)
+    this.valueSummer = parseInt(data.valueSummer)
     this.mixProperties = data.mixProperties.split(",")
     this.badMixProperties = data.badMixProperties.split(",")
     this.triggeredEvents = data.triggeredEvents.split(",")
