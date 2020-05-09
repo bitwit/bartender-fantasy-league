@@ -11,6 +11,8 @@ export default class EventCard {
   baseCustomersMod: number
   priceMod: number // price per drink sold
   prerequisiteEvents: string[]
+  prerequisiteBartender: string | null
+  prerequisiteIngredient: string | null
   minSeason: number
   minWeek: number
   isRejectable: boolean
@@ -21,17 +23,19 @@ export default class EventCard {
     this.id = data.id
     this.name = data.name
     this.expiryInWeeks = parseInt(data.expiryInWeeks || 1)
-    this.description = data.description || ""
+    this.description = data.description
     this.cost = parseInt(data.cost || 0)
     this.cash = parseInt(data.cash || 0)
     this.baseCustomersMod = parseInt(data.baseCustomersMod || 0)
     this.priceMod = parseInt(data.priceCostMod || 0)
     this.prerequisiteEvents = (data.prerequisiteEvents?.split(",") || []).filter((x: string) => {x != ""})
+    this.prerequisiteBartender = data.prerequisiteBartender == "" ? null : data.prerequisiteBartender
+    this.prerequisiteIngredient = data.prerequisiteIngredient == "" ? null : data.prerequisiteIngredient
     this.minSeason = parseInt(data.minSeason || 0)
     this.minWeek = parseInt(data.minWeek || 0)
     this.isRejectable = data.isRejectable === "1" ? true : false
-    this.acceptText = data.acceptText || "OK"
-    this.rejectText = data.rejectText || "Pass"
+    this.acceptText = data.acceptText == "" ? "OK" : data.acceptText
+    this.rejectText = data.rejectText == "" ? "Pass" : data.rejectText
   }
 
   hasBusinessMetConditions(
@@ -59,14 +63,25 @@ export default class EventCard {
       }
     }
 
-    let hasMetTriggerConditions = false
+    let hasMetTriggerConditions = true
+    if(this.prerequisiteIngredient != null) {
+      hasMetTriggerConditions = false
+    }
     for (let ingredient of state.drinkSpecial) {
-      if (ingredient.triggeredEvents.indexOf(this.id) != -1) {
+      if (ingredient.id === this.prerequisiteIngredient) {
         hasMetTriggerConditions = true
       }
     }
+
+    // if (this.id == "noshow2") {
+    //   debugger;
+    // }
+
+    if(this.prerequisiteBartender != null) {
+      hasMetTriggerConditions = false
+    }
     for (let bartender of state.selectedBartenders) {
-      if (bartender.event === this.id) {
+      if (bartender.id === this.prerequisiteBartender) {
         hasMetTriggerConditions = true
       }
     }

@@ -78,12 +78,14 @@ export class BusinessObject {
     }
 
     let didTriggerEvent = false
-    for (let event of state.events) {
-      if (event.hasBusinessMetConditions(state)) {
-        console.log('event triggered')
-        didTriggerEvent = true
-        onEventOccurence(event)
-        break;
+    if (state.currentWeekIndex < 25) {
+      for (let event of state.events) {
+        if (event.hasBusinessMetConditions(state)) {
+          console.log('event triggered')
+          didTriggerEvent = true
+          onEventOccurence(event)
+          break;
+        }
       }
     }
 

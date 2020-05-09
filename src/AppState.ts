@@ -79,6 +79,7 @@ export default class AppState {
       }
 
       let cleanEvents = events.filter((x:any) => { return x.id != "" })
+      console.log('cleanEvents', cleanEvents.map(x => { return x.id }))
       for(let data of cleanEvents) {
         this.events.push(new EventCard(data))
       }

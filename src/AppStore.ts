@@ -45,6 +45,7 @@ export default new Vuex.Store({
         return
       }
       //Week has completed
+      console.log('week completed', state.businessObject)
       const season = state.seasons[state.currentSeasonIndex]
       const week = state.weeks[state.currentWeekIndex]
       const result = state.businessObject.weekComplete(
