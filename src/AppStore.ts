@@ -13,7 +13,7 @@ export default new Vuex.Store({
   
   mutations: {
     resetCountdown: function (state: AppState) {
-      state.countdownProgress = 2000 
+      state.countdownProgress = 0 
     },
     clearAnnouncements: function (state: AppState) {
       state.announcements.length = 0
@@ -40,7 +40,7 @@ export default new Vuex.Store({
       }
     },
     tick: function (state: AppState) {
-      state.progress += 0.1
+      state.progress += 3.0
       if(state.progress <= 10) {
         return
       }
