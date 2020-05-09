@@ -148,6 +148,12 @@ export default Vue.extend({
 html { height: 100% }
 body { height: 100% }
 
+@font-face {
+  font-family: 'ComicPapyrus';
+  src: url("../public/fonts/ComicPapyrus.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -185,12 +191,14 @@ body { height: 100% }
 }
 
 .drink-special {
+  font-family: 'ComicPapyrus';
+  box-sizing: border-box;
   color: white;
   background: #333;
   min-height: 100pt;
   font-size: 16pt;
   margin: 20px;
-  padding-top: 10px;
+  padding: 10px;
   h4 {
     margin: 0
   }
