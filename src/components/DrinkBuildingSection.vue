@@ -9,7 +9,7 @@
           :class="ingredientClass(index)" 
           :style="ingredientStyles(index)"
           @click="onIngredientSelected(index)">
-          <h3>{{ingredient.name}}</h3>
+          <h5 class="ingredient-title">{{ingredient.name}}</h5>
         </div>
       </div>
     </div>
@@ -140,4 +140,11 @@ $browser-context: 16; // Default
     background-color: green;
   }
 }
+.ingredient-title {
+  display: block;
+  background: rgba($color: #fff, $alpha: 0.6);
+  border-bottom: em(1) solid rgba($color: #333, $alpha: 0.5);
+  margin: 0;
+}
+
 </style>
