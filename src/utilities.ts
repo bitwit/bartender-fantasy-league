@@ -48,3 +48,12 @@ export function httpGet(url: string) {
     xmlHttp.send( null );
     return xmlHttp.responseText;
 }
+
+declare global {
+  interface Window { bflDebug: any; }
+}
+
+export const debug: any = {
+  test: true
+}
+window.bflDebug = debug

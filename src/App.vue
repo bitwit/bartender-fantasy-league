@@ -49,6 +49,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import AppState from './AppState'
 import AppStore from './AppStore'
+import { debug } from './utilities'
 
 import IntroSection from './components/IntroSection.vue'
 import BartenderSelectionSection from './components/BartenderSelectionSection.vue'
@@ -85,6 +86,9 @@ export default Vue.extend({
         this.handleKeyDown(e.key)
       }
     })
+    debug.superSpeed = () => {
+      this.$store.commit('superSpeedMode')
+    }
   },
   computed: Vuex.mapState({
     announcements: function (state: AppState) { return state.announcements },
