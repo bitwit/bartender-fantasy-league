@@ -6,8 +6,7 @@
         <br />
         <br />
         Be a decision maker, make cocktails, get drunk on the job, hire a goat, 
-        and 'help' the owner's spouse. All your usual bar management challenges all 
-        from the comfort of your own home.
+        and 'help' the owner's spouse. All your usual bar management challenges from the comfort of your own home.
         <br />
         <br />
         Anyone can be a good bar manager. There's nothing to it.. or is there?
