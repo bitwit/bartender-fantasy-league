@@ -1,11 +1,31 @@
 <template>
-  <div class="intro-view view-container">
+  <div class="intro-wrapper">
+    <div class="intro-text-area">
+      <p>
+        Live out your dream of being a bar manager in all it's glory.
+        <br />
+        <br />
+        Be a decision maker, make cocktails, get drunk on the job, hire a goat, 
+        and 'help' the owner's spouse. All your usual bar management challenges all 
+        from the comfort of your own home.
+        <br />
+        <br />
+        Anyone can be a good bar manager. There's nothing to it.. or is there?
+      </p>
+    </div>
+  <div class="bar-name-area view-container">
     <h2>Name your bar</h2>
-    <input type="text" v-model="barName" @keyup="nameChanged" name="barName"/>
-
+    <input 
+      class="bar-name-input" 
+      type="text"
+      placeholder= "Some Random Bar"
+      v-model="barName" 
+      @keyup="nameChanged" 
+      name="barName"/>
     <button @click="newGame()" class="game-start">
       <span class="title">Let's do this</span>
     </button>
+  </div>
   </div>
 </template>
 
@@ -37,11 +57,42 @@ export default Vue.component('intro-section', {
 </script>
 
 <style lang="scss">
+.intro-wrapper {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+.intro-text-area {
+  flex-basis: 40%;
+  text-align: left;
+}
+.bar-name-area {
+  flex-basis: 40%;
+  display: flex;
+  flex-direction: column;
+}
 label {
   display: block;
 }
+.bar-name-input {
+  width: 80%;
+  height: 40px;
+  font-size: 28px;
+  margin: 0 auto;
+}
 .game-start {
   display: block;
-  margin: 0 auto;
+  margin: 20px auto 0;
+  width: 60%;
+  height: 50px;
+  font-size: 28px;
+  background: cornflowerblue;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba($color: #338833, $alpha: 1.0);
+  }
 }
 </style>
