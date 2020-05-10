@@ -34,6 +34,7 @@
         <intro-section v-if="currentView == 'intro'" />
         <bartender-selection-section v-if="currentView == 'bartender-selection'" />
         <drink-building-section v-if="currentView == 'drink-building'"/>
+        <season-summary-section v-if="currentView == 'season-summary'" />
         <end-section v-if="currentView == 'end'" />
       </div>
     </div>
@@ -55,6 +56,7 @@ import IntroSection from './components/IntroSection.vue'
 import BartenderSelectionSection from './components/BartenderSelectionSection.vue'
 import DrinkBuildingSection from './components/DrinkBuildingSection.vue'
 import GameStatsSection from './components/GameStatsSection.vue'
+import SeasonSummarySection from './components/SeasonSummarySection.vue'
 import EndingSection from './components/EndSection.vue'
 
 import AnnouncementView from './components/Announcement.vue'
@@ -71,6 +73,7 @@ export default Vue.extend({
     BartenderSelectionSection,
     DrinkBuildingSection,
     GameStatsSection,
+    SeasonSummarySection,
     EndingSection,
 
     AnnouncementView, 
@@ -218,5 +221,10 @@ div.modal-container {
   height: 75%;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
   text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
 }
 </style>

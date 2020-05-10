@@ -28,7 +28,7 @@ export default class EventCard {
     this.cash = parseInt(data.cash || 0)
     this.baseCustomersMod = parseInt(data.baseCustomersMod || 0)
     this.priceMod = parseInt(data.priceCostMod || 0)
-    this.prerequisiteEvents = (data.prerequisiteEvents?.split(",") || []).filter((x: string) => {x != ""})
+    this.prerequisiteEvents = data.prerequisiteEvents.split(",").filter((x: string) => { return x != ""})
     this.prerequisiteBartender = data.prerequisiteBartender == "" ? null : data.prerequisiteBartender
     this.prerequisiteIngredient = data.prerequisiteIngredient == "" ? null : data.prerequisiteIngredient
     this.minSeason = parseInt(data.minSeason || 0)
@@ -57,7 +57,7 @@ export default class EventCard {
     let allAssetIds: any = {};
     let allAssets = state.businessObject.assets.concat(state.businessObject.expiredAssets)
     allAssets.forEach(a => { allAssetIds[a.id] = true })
-    for(let prerequisite in this.prerequisiteEvents) {
+    for(let prerequisite of this.prerequisiteEvents) {
       if (!allAssetIds[prerequisite]) {
         return false
       }
@@ -100,7 +100,7 @@ export default class EventCard {
   }
 
   onAccept(business: BusinessObject) {
-    business.stats.cash -= this.cost
+    business.stats.cash += this.cash
   }
 
   onReject(business: BusinessObject) {

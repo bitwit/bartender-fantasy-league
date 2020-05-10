@@ -5,12 +5,14 @@
         <br>
         <span class="title">Cash</span>
         </h3>
-        <strong :class="cashValuePositiveClass" class="cash-value">{{game.stats.cash | number(0)}}</strong>
+        <strong :class="cashValuePositiveClass" class="cash-value">${{game.stats.cash | number(0)}}</strong>
     </div>
     <div class="assets">
-      <h2 data-glyph="spreadsheet" class="section-title oi"><br><span class="title">Assets</span></h2>
+      <h2 class="section-title"><br><span class="title">Assets</span></h2>
       <div class="assets-container">
-        <ls-asset v-for="asset in game.assets" :key="asset.name" :asset="asset"></ls-asset>
+        <transition-group name="asset-list" tag="div">
+          <asset v-for="asset in game.assets" :key="asset.name" :asset="asset"/>
+        </transition-group>
       </div>
     </div>
   </div>
@@ -25,7 +27,10 @@ export default Vue.component('game-stats-section', {
   filters: {
     number: function (value: string, decimals: string) {
       if (!value) { return '' } 
-      return parseFloat(value).toFixed(parseInt(decimals))
+      return parseFloat(value)
+        .toFixed(parseInt(decimals))
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     }
   },
   computed: Vuex.mapState({
@@ -41,4 +46,29 @@ export default Vue.component('game-stats-section', {
 </script>
 
 <style lang="scss">
+.asset-list-enter-active, .asset-list-leave-active {
+  transition: all 1s;
+}
+.asset-list-enter, .asset-list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.asset {
+  box-sizing: border-box;
+  display: block;
+  background-color: cornflowerblue;
+  color: #444;
+  margin: 0 auto;
+  padding: 4px 8px;
+  width: 90%;
+  border-radius: 4px;
+  .title {
+    display: inline-block;
+    margin: 0 3px;
+  }
+  .expiry {
+    display: inline-block;
+    margin: 0 3px;
+  }
+}
 </style>

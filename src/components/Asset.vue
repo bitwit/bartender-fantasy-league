@@ -1,14 +1,14 @@
 <template>
   <div v-bind:class="typeClass" class="asset">
-    <span v-bind:data-glyph="asset.icon" class="title oi">&nbsp;{{asset.name}}</span>
-    <span v-if="asset.expiry > 0" class="expiry">{{asset.expiry}}</span>
+    <span class="title">&nbsp;{{asset.name}}</span>
+    <span v-if="asset.expiryInWeeks > 0" class="expiry">{{asset.expiryInWeeks}}</span>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.component('ls-asset', {
+export default Vue.component('asset', {
   props: {
     asset: Object
   },
@@ -21,3 +21,6 @@ export default Vue.component('ls-asset', {
   }
 })
 </script>
+<style lang="scss">
+
+</style

@@ -10,7 +10,7 @@
     </div>
     <div class="main-bar-space">
       <div class="bar-background">
-        <div class="bar-work-area">
+        <div class="bar-work-area" v-if="currentView != 'season-summary'">
           <bartender-character v-for="bartender in bartenders" :key="bartender.id" :bartender="bartender" />
         </div>
       </div>

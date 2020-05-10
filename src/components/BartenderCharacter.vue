@@ -12,11 +12,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 export default Vue.component('bartender-character', {
   props: {
-    bartender: Object
-  },
-  data: function() { 
-    return {
-      mood: 'happy'
+    bartender: Object,
+    mood: {
+      type: String,
+      default: 'happy'
     }
   },
   computed: Vuex.mapState({

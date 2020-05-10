@@ -4,41 +4,26 @@ import EventCard from './classes/EventCard'
 import Season from './classes/Season'
 import Week from './classes/Week'
 import AppState from './AppState'
-
-class BusinessCost {
-  id: string
-  name: string
-  amount: number
-  constructor(id: string, name: string, amount: number) {
-    this.id = id
-    this.name = name
-    this.amount = amount
-  }
-}
+import WeeklyResult from './interfaces/WeeklyResult'
+import BusinessCost from './classes/BusinessCost'
 
 class BusinessStats {
-  cash: number = 50
+  cash: number = 0
   drinkPrice: number = 12
+  costPerDrink: number = 3
+  taxRate: number = 0.15
   fixedCostsPerWeek: BusinessCost[] = [
     new BusinessCost("rent", "Rent", 3_850),
     new BusinessCost("hydro", "Hydro", 1000),
     new BusinessCost("labour", "Labour", 5000),
   ]
-  //todo: variable costs???
-}
-
-class BusinessFlags {
-  isInBusiness: boolean = true
 }
 
 export class BusinessObject {
   stats: BusinessStats = new BusinessStats()
-  flags: BusinessFlags = new BusinessFlags()
 
   assets: EventCard[] = []
   expiredAssets: EventCard[] = []
-  weeklyHistory: any[] = []
-  seasonRevenueHistory: any[] = []
 
   constructor() {
    
@@ -58,7 +43,7 @@ export class BusinessObject {
     return baseCustomers + customersMod
   }
 
-  calculatePrice(): number {
+  calculatePricePerDrink(): number {
     let priceMod = 0
     for(let asset of this.assets){
       priceMod += asset.priceMod
@@ -92,19 +77,9 @@ export class BusinessObject {
     let baseDemand = this.calculateBaseDemand(season);
 
     let stats = this.stats;
-    let cashDelta = 0;
-    let fixedCostTotal = 0;
 
-    for(let cost of this.stats.fixedCostsPerWeek) {
-      cashDelta -= cost.amount
-      fixedCostTotal += cost.amount
-    }
-    //todo: variable costs
-    // if (stats.variableCostPerWeek > 0) {
-    //   cashDelta -= numCustomers * stats.fixedCostPerWeek;
-    // }
-
-    let playerMultiplier = state.bartenders.reduce((sum, current) => { 
+    //Profits
+    let playerMultiplier = state.selectedBartenders.reduce((sum, current) => { 
       return sum + current.multiplier 
     }, 0)
     let cocktailMultiplier = state.drinkSpecial.reduce((sum, current) => { 
@@ -112,18 +87,36 @@ export class BusinessObject {
       return sum + value
     }, 0)
     let multiplier = playerMultiplier + cocktailMultiplier
-    let drinksSold = baseDemand * multiplier
-    
-    cashDelta += drinksSold * this.calculatePrice()
-    stats.cash = stats.cash + cashDelta;
+    let drinksSold = baseDemand * multiplier / 10
+    let revenue = (drinksSold * this.calculatePricePerDrink())
 
-    console.log({playerMultiplier, cocktailMultiplier, drinksSold, cashDelta, baseDemand, fixedCostTotal})
-
-    let weekHistory = {
-      cashDelta: cashDelta,
-      drinksSold: drinksSold
+    let fixedCostTotal = 0;
+    for(let cost of this.stats.fixedCostsPerWeek) {
+      fixedCostTotal += cost.amount
     }
-    this.weeklyHistory.push(weekHistory);
+    let variableCostTotal = drinksSold * this.stats.costPerDrink
+
+    let netProfit = ((revenue - fixedCostTotal) - variableCostTotal)
+
+    let tax = this.stats.taxRate * netProfit
+    let retainedEarnings = netProfit - tax
+    stats.cash = stats.cash + retainedEarnings
+
+    let weekHistory: WeeklyResult = {
+      pricePerDrink: this.calculatePricePerDrink(),
+      costPerDrink: this.stats.costPerDrink,
+      drinksSold: drinksSold,
+      totalRevenue: revenue,
+
+      fixedCostTotal: fixedCostTotal,
+      fixedCosts: this.stats.fixedCostsPerWeek,
+      variableCostTotal: variableCostTotal,
+
+      taxes: tax,
+
+      retainedEarnings: retainedEarnings,
+    }
+    season.results.push(weekHistory)
 
     return {
       weekHistory: weekHistory,
@@ -132,8 +125,7 @@ export class BusinessObject {
   };
 
   seasonComplete(season: Season) {
-    // this.setCosts(sprintNumber);
-    // return this.setCreditLimit();
+    console.log('Season Complete')
   }
 
   processEndGame() {

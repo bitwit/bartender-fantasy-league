@@ -29,7 +29,7 @@ export default new Vuex.Store({
     },
     prepareForNextSeason: function (state: AppState) {
       state.currentWeekIndex = 0
-      state.currentView = 'drink-building'
+      state.currentView = 'season-summary'
     },
     nextSeason: function (state: AppState) {
       state.currentSeasonIndex++
@@ -100,11 +100,15 @@ export default new Vuex.Store({
       if(!event) { return }
       event.onAccept(state.businessObject)
       state.businessObject.assets.unshift(event) // Add it to our current assets
+      state.seasons[state.currentSeasonIndex].eventsAccepted.push(event)
     },
 
     rejectFirstEvent: function (state: AppState) {
       const event = state.announcements.shift()
       event?.onReject(state.businessObject)
+      if (event) {
+        state.seasons[state.currentSeasonIndex].eventsRejected.push(event)
+      }
     },
 
     processEndGame: function (state: AppState) {
