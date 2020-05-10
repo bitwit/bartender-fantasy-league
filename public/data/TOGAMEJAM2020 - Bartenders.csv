@@ -1,13 +1,13 @@
 name,id,expressions,multiplier,difficulty,title,description,event
-eddie,eddie,male,5,expert,stoner barback,may or may not get the work done after he finishes his whippits in the walk-in,cream
-ashley,ashley,female,5,expert,glassware polisher/shatterer,"two left feet, for hands, seemingly tied behind her back at all times",breakage
-marco,marco,male,7,expert,always hungover,he started drinking when you begun your r.e.m cycle and only ever works brunch,noshow
-bear,bear,male,8,hard,floor manager,"hired by the previous bar manager, gives off creeper vibes",harassment
-tonya,tonya,female,10,hard,owners friend,"does enough to not lose her job, not that she ever could",owner
-theodore,theodore,male,10,hard,guest bartender,"shows up once a week to show off his ego, makes a decent manhattan",theft
-beth,beth,female,11,moderate,instagram bartender,"makes pretty drinks. sometimes delicious, but always pretty",viral
-annalise,annalise,female,13,moderate,bar star,jack of all trades from flair to mixology but messy as f&(%,global
-joe,joe,male,13,moderate,head bartender,the ego of theodore with the skills of annalise,
 regis,regis,male,14,easy,barchef,"basically invented molecular mixology, then disowned it and went back to making real drinks",molecular
 heather,heather,male,14,easy,flair queen,"Will flip a bottle, flip you off, and make you a flip.  all with style.",spillage
 goat,goat,goat,20,easy,master mixologist,once made a daiquiri in vietnam with nothing but a disarmed mine and some fishing wire,press
+beth,beth,female,11,moderate,instagram bartender,"makes pretty drinks. sometimes delicious, but always pretty",viral
+annalise,annalise,female,13,moderate,bar star,jack of all trades from flair to mixology but messy as f&(%,global
+joe,joe,male,13,moderate,head bartender,the ego of theodore with the skills of annalise,
+bear,bear,male,8,hard,floor manager,"hired by the previous bar manager, gives off creeper vibes",harassment
+tonya,tonya,female,10,hard,owners friend,"does enough to not lose her job, not that she ever could",owner
+theodore,theodore,male,10,hard,guest bartender,"shows up once a week to show off his ego, makes a decent manhattan",theft
+eddie,eddie,male,5,expert,stoner barback,may or may not get the work done after he finishes his whippits in the walk-in,cream
+ashley,ashley,female,5,expert,glassware polisher/shatterer,"two left feet, for hands, seemingly tied behind her back at all times",breakage
+marco,marco,male,7,expert,always hungover,he started drinking when you begun your r.e.m cycle and only ever works brunch,noshow

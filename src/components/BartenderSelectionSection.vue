@@ -17,6 +17,7 @@
           <div v-if="mouseoverBartenderIndex != -1" class="bartender-description">
             <bartender-character :bartender="bartenders[mouseoverBartenderIndex]">
             </bartender-character>
+            <h3 class="bartender-title">{{bartenders[mouseoverBartenderIndex].title}}</h3>
             <h3>Difficulty: {{bartenders[mouseoverBartenderIndex].difficulty}}</h3>
             <p>{{bartenders[mouseoverBartenderIndex].description}}</p>
           </div>
@@ -93,6 +94,10 @@ export default Vue.component('bartender-selection-section', {
   display: flex;
   flex-direction: column;
   width: 30%;
+}
+
+h3.bartender-title {
+  text-transform: capitalize;
 }
 
 .bartender-container {
