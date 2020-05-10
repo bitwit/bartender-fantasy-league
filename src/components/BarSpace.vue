@@ -14,7 +14,16 @@
           <bartender-character v-for="bartender in bartenders" :key="bartender.id" :bartender="bartender" />
         </div>
       </div>
-      <div class="bar-foreground"></div>
+      <div class="bar-foreground">
+        <div class="ingredients-area">
+          <div 
+            class="bar-ingredient" 
+            :style="ingredientStyles(index)"
+            v-for="(ingredient, index) in drinkSpecial" 
+            :ingredient="ingredient" 
+            :key="ingredient.id"></div>
+        </div>
+      </div>
     </div>
     <div class="upper-right-bar-space">
       <div v-if="currentView == 'main'">
@@ -88,8 +97,15 @@ export default Vue.component('bar-space', {
   computed: Vuex.mapState({
     bartenders: function(state: AppState) { return state.selectedBartenders },
     currentView: function (state: AppState) { return state.currentView },
+    drinkSpecial: function (state: AppState) { return state.drinkSpecial },
   }),
   methods: {
+    ingredientStyles: function (index: number) {
+      let ingredient = this.$store.state.drinkSpecial[index]
+      return {
+        'background-image': `url(./img/ingredient-${ingredient.imageId}.png)`,
+      } 
+    },
     patronStyles: function (index: number) {
       return {
         top: `${Math.random() * 100}px`,
@@ -163,7 +179,22 @@ export default Vue.component('bar-space', {
   }
 }
 
-.bar-space {
+.ingredients-area {
+  margin: 0 auto;
+  width: 30%;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  top: -60px;
+}
+
+.bar-ingredient {
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  width: 80pt;
+  height: 80pt;
+  margin: 0 auto 20px;
 }
 
 </style>
