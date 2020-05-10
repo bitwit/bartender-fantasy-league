@@ -1,8 +1,6 @@
 <template>
   <div class="intro-view view-container">
-    <h1 class="intro-title">Drink Building</h1>
-
-    <h2>Pick your {{category.name}}</h2>
+    <h2 class="intro-title">Drink Building - Pick your {{category.name}}</h2>
     <div class="ingredients-container">
       <div class="ingredient-container" 
         v-for="(ingredient, index) in limitedOptions" 
@@ -107,6 +105,11 @@ export default Vue.component('drink-building-section', {
 
 
 <style lang="scss" scoped>
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+
 .ingredients-container {
   display: flex;
   flex-wrap: wrap;
@@ -120,15 +123,15 @@ export default Vue.component('drink-building-section', {
 
 .ingredient {
   background-color: white;
-  background-size: 80px 80px;
+  background-size: em(80) em(80);
   background-repeat: no-repeat;
   background-position: bottom;
 
   border: 1px solid #999;
   color: #333;
-  width: 80pt;
-  height: 80pt;
-  margin: 0 auto 20px;
+  width: em(80);
+  height: em(80);
+  margin: 0 auto em(20);
   cursor: pointer;
   &:hover {
     color: cornflowerblue;

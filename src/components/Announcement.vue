@@ -72,6 +72,10 @@ export default Vue.component('ls-announcement', {
 })
 </script>
 <style lang="scss">
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
 
 /* line 541, style.sass */
 div.announcements {
@@ -128,8 +132,8 @@ div.announcement {
     margin: 0 }
 
   .cost-info {
-    margin: 6px 0;
-    font-size: 24px;
+    margin: em(6) 0;
+    font-size: em(24);
   }
 
   /* line 593, style.sass */
@@ -192,4 +196,11 @@ div.announcement {
   background: -o-linear-gradient(left, #ffffff 0%, #e2e2e2 25%);
   background: -ms-linear-gradient(left, #ffffff 0%, #e2e2e2 25%);
   background: linear-gradient(to right, #ffffff 0%, #e2e2e2 25%); }
+
+@media only screen and (max-width: 1024px) {
+  .announcement {
+    font-size: em(9)
+  }
+}
+
 </style>

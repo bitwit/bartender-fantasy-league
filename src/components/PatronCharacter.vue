@@ -60,6 +60,11 @@ export default Vue.component('patron-character', {
 </script>
 
 <style lang="scss">
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+
 .patron-character {
   position: absolute;
   z-index: 20;
@@ -69,12 +74,12 @@ export default Vue.component('patron-character', {
   .patron-head {
     background-size: cover;
     color: #333;
-    width: 80pt;
-    height: 80pt;
+    width: em(80);
+    height: em(80);
     margin: 0 auto;
     box-sizing: border-box;
     position: relative;
-    top: 20px;
+    top: em(20);
   }
   .patron-face {
     background-size: cover;
@@ -86,8 +91,8 @@ export default Vue.component('patron-character', {
   }
   .patron-body {
     background: url('../../public/img/default-body.png');
-    width: 120pt;
-    height: 160pt;
+    width: em(120);
+    height: em(160);
     background-size: cover;
     margin: 0 auto;
   }

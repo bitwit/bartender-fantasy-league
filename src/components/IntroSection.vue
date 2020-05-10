@@ -3,7 +3,7 @@
     <div class="intro-text-area">
       <img class="logo" src="../../public/img/logo.png" />
       <h1>Bartender Fantasy League</h1>
-      <p>
+      <p class="intro-description">
         Live out your dream of being a bar manager in all it's glory.
         <br />
         <br />
@@ -58,8 +58,13 @@ export default Vue.component('intro-section', {
 </script>
 
 <style lang="scss">
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+
 .intro-wrapper {
-  font-size: 20px;
+  font-size: em(20);
   display: flex;
   justify-content: space-around;
 }
@@ -69,12 +74,12 @@ export default Vue.component('intro-section', {
 }
 img.logo {
   display: block;
-  width: 160px;
-  height: 160px;
+  width: em(160);
+  height: em(160);
   margin: 0 auto;
 }
 h1 {
-  font-size: 28px;
+  font-size: em(28);
 }
 
 .bar-name-area {
@@ -87,23 +92,33 @@ label {
 }
 .bar-name-input {
   width: 80%;
-  height: 40px;
-  font-size: 28px;
+  height: em(40);
+  font-size: em(28);
   margin: 0 auto;
 }
 .game-start {
   display: block;
-  margin: 20px auto 0;
+  margin: em(20) auto 0;
   width: 60%;
-  height: 50px;
-  font-size: 28px;
+  height: em(50);
+  font-size: em(28);
   background: cornflowerblue;
   color: white;
   border: 0;
-  border-radius: 4px;
+  border-radius: em(4);
   cursor: pointer;
   &:hover {
     background-color: rgba($color: #338833, $alpha: 1.0);
   }
 }
+
+@media only screen and (max-width: 1024px) {
+  .intro-wrapper {
+    font-size: em(10)
+  }
+  p.intro-description {
+    display: none;
+  }
+}
+
 </style>

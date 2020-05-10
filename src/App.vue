@@ -153,6 +153,12 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+$browser-context: 16; // Default
+
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+
 html { height: 100% }
 body { height: 100% }
 
@@ -163,6 +169,7 @@ body { height: 100% }
   font-style: normal; }
 
 #app {
+  font-size: em(16);
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -179,23 +186,25 @@ body { height: 100% }
   height: 100%;
 }
 .left-column {
+  z-index: 8888;
   width: 15%;
-  background-color: rgba($color: #000000, $alpha: 0.1)
+  background-color: rgba($color: #888, $alpha: 0.3)
 }
 .center-column {
   width: 70%;
 }
 .right-column { 
+  z-index: 8888;
   width: 15%;
-  background-color: rgba($color: #000000, $alpha: 0.1)
+  background-color: rgba($color: #888, $alpha: 0.3)
 }
 
 .main-title {
   background: rgba($color: #C68E5B, $alpha: 1);
-  border: 1px solid #333;
-  margin: 10px;
-  padding: 10px;
-  font-size: 20pt;
+  border: em(1) solid #333;
+  margin: em(10);
+  padding: em(10);
+  font-size: em(20);
 }
 
 .drink-special {
@@ -203,10 +212,10 @@ body { height: 100% }
   box-sizing: border-box;
   color: white;
   background: #333;
-  min-height: 100pt;
-  font-size: 16pt;
-  margin: 20px;
-  padding: 10px;
+  min-height: em(100);
+  font-size: em(16);
+  margin: em(20);
+  padding: em(10);
   h4 {
     margin: 0
   }
@@ -237,6 +246,12 @@ div.modal-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
 }
+
+@media only screen and (max-width: 1024px) {
+  .column {
+    font-size: em(10);
+  }
+}
+
 </style>

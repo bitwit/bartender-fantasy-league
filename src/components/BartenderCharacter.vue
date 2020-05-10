@@ -34,17 +34,21 @@ export default Vue.component('bartender-character', {
 </script>
 
 <style lang="scss">
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
 .bartender-character {
 
   .bartender-head {
     background-size: cover;
     color: #333;
-    width: 80pt;
-    height: 80pt;
+    width: em(80);
+    height: em(80);
     margin: 0 auto;
     box-sizing: border-box;
     position: relative;
-    top: 20px;
+    top: em(20);
   }
   .bartender-face {
     background-size: cover;
@@ -56,10 +60,18 @@ export default Vue.component('bartender-character', {
   }
   .bartender-body {
     background: url('../../public/img/default-body.png');
-    width: 120pt;
-    height: 160pt;
+    width: em(120);
+    height: em(160);
     background-size: cover;
     margin: 0 auto;
+  }
+}
+
+
+@media only screen and (max-width: 1024px) {
+  .bartender-character {
+    font-size: em(8);
+    background-size: cover;
   }
 }
 </style>

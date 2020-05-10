@@ -34,14 +34,18 @@ export default Vue.component('bartender', {
 </script>
 
 <style lang="scss">
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
 .bartender {
   position: relative;
   background-color: white;
-  border: 1px solid #666;
+  border: em(1) solid #666;
   color: #333;
-  width: 80pt;
-  height: 80pt;
-  margin: 0 auto 10px;
+  width: em(80);
+  height: em(80);
+  margin: 0 auto em(10);
   box-sizing: border-box;
   cursor: pointer;
   &:hover {
@@ -62,5 +66,12 @@ h3.bartender-name {
   background-color: rgba($color: #ffffff, $alpha: 0.8);
   color: blue;
   margin: 0;
+}
+
+@media only screen and (max-width: 1024px) {
+  .bartender {
+    font-size: em(8);
+    background-size: cover;
+  }
 }
 </style>

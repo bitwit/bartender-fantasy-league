@@ -52,3 +52,15 @@ export default Vue.component('end-section', {
   }
 })
 </script>
+
+<style lang="scss">
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+@media only screen and (max-width: 1024px) {
+  .end-view {
+    font-size: em(9);
+  }
+}
+</style>

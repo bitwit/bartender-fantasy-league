@@ -2,11 +2,13 @@
   <div class="bar-space">
     <div class="upper-left-bar-space">
       <div v-if="currentView == 'main'">
-        <patron-character 
-          :mood="patron.mood"
-          v-for="(patron, index) in patronDistribution.upperLeftPatrons" 
-          :key="index" 
-          :index="index"/>
+        <transition-group name="patron-group" tag="div">
+          <patron-character 
+            :mood="patron.mood"
+            v-for="(patron, index) in patronDistribution.upperLeftPatrons" 
+            :key="patron.id" 
+            :index="index"/>
+        </transition-group>
       </div>
     </div>
     <div class="main-bar-space">
@@ -28,38 +30,46 @@
     </div>
     <div class="upper-right-bar-space">
       <div v-if="currentView == 'main'">
+        <transition-group name="patron-group" tag="div">
         <patron-character 
           :mood="patron.mood"
           v-for="(patron, index) in patronDistribution.upperRightPatrons" 
-          :key="index" 
+          :key="patron.id" 
           :index="index"/>
+        </transition-group>
       </div>
     </div>
     <div class="lower-left-bar-space">
       <div v-if="currentView == 'main'">
+        <transition-group name="patron-group" tag="div">
         <patron-character 
           :mood="patron.mood"
           v-for="(patron, index) in patronDistribution.lowerLeftPatrons" 
-          :key="index" 
+          :key="patron.id" 
           :index="index"/>
+        </transition-group>
       </div>
     </div>
     <div class="lower-center-bar-space">
       <div v-if="currentView == 'main'">
+        <transition-group name="patron-group" tag="div">
         <patron-character 
           :mood="patron.mood"
           v-for="(patron, index) in patronDistribution.lowerCenterPatrons" 
-          :key="index" 
+          :key="patron.id" 
           :index="index"/>
+        </transition-group>
       </div>
     </div>
     <div class="lower-right-bar-space">
       <div v-if="currentView == 'main'">
+        <transition-group name="patron-group" tag="div">
         <patron-character 
           :mood="patron.mood"
           v-for="(patron, index) in patronDistribution.lowerRightPatrons" 
-          :key="index" 
+          :key="patron.id" 
           :index="index"/>
+        </transition-group>
       </div>
     </div>
   </div>
@@ -131,8 +141,8 @@ export default Vue.component('bar-space', {
     },
     patronStyles: function (index: number, mood: string) {
       return {
-        top: `${Math.random() * 100}px`,
-        left: `${index * 120}px`,
+        top: `${Math.random() * 100 / 16}em`,
+        left: `${index * 120 / 16}em`,
       }
     }
   }
@@ -140,6 +150,11 @@ export default Vue.component('bar-space', {
 </script>
 
 <style lang="scss">
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+
 .bar-space {
   display: flex;
   flex-wrap: wrap;
@@ -154,7 +169,7 @@ export default Vue.component('bar-space', {
    .upper-right-bar-space {
      position: relative;
      z-index: 11;
-     left: -80px;
+     left: em(-80);
      flex-basis: 15%;
    }
    .lower-left-bar-space {
@@ -164,29 +179,31 @@ export default Vue.component('bar-space', {
    .lower-center-bar-space {
      position: relative;
      z-index: 11;
-     top: -100px;
+     top: em(-100);
      display: flex;
      flex-basis: 70%;
    }
    .lower-right-bar-space {
       position: relative;
       z-index: 11;
-      left: -80px;
+      left: em(-80);
       position: relative;
       flex-basis: 15%; 
    }
 }
 
 .bar-background {
-  margin-top: 70pt;
+  margin-top: em(70);
   background: url(../../public/img/bar-background.png) no-repeat;
-  width: 758px;
-  height: 104px;
+  width: em(758);
+  height: em(104);
+  background-size: cover;
 }
 .bar-foreground {
   background: url(../../public/img/bar-foreground.png) no-repeat;
-  width: 758px;
-  height: 173px;
+  width: em(758);
+  height: em(173);
+  background-size: cover;
 
   position: relative;
   z-index: 10;
@@ -198,7 +215,7 @@ export default Vue.component('bar-space', {
 
   .bartender-character {
     position: relative;
-    top: -80px;
+    top: em(-80);
   }
 }
 
@@ -208,16 +225,29 @@ export default Vue.component('bar-space', {
   display: flex;
   justify-content: space-around;
   position: relative;
-  top: -60px;
+  top: em(-30);
 }
 
 .bar-ingredient {
-  background-size: 80px 80px;
   background-repeat: no-repeat;
   background-position: bottom;
-  width: 80pt;
-  height: 80pt;
-  margin: 0 auto 20px;
+  background-size: cover;
+  width: em(80);
+  height: em(80);
+  margin: 0 auto em(20);
+}
+
+.patron-group-enter-active, .patron-group-leave-active {
+  transition: all 1s;
+}
+.patron-group-enter, .patron-group-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+@media only screen and (max-width: 1024px) {
+  .bar-space {
+   font-size: em(10)
+  }
 }
 
 </style>

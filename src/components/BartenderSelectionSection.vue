@@ -1,6 +1,6 @@
 <template>
   <div class="intro-view view-container">
-    <h1 class="intro-title">Select 3 Bartenders</h1>
+    <h2 class="intro-title">Select 3 Bartenders</h2>
 
     <div class="picker-area">
       <div class="bartenders-area">
@@ -76,6 +76,10 @@ export default Vue.component('bartender-selection-section', {
 })
 </script>
 <style lang="scss">
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
 
 .picker-area {
   display: flex;
@@ -106,7 +110,7 @@ h3.bartender-title {
 
 .bartender {
   &.selected-true {
-    border: 5px solid red;
+    border: em(5) solid red;
   }
 }
 
@@ -114,13 +118,17 @@ h3.bartender-title {
   height: 80%;
 }
 
-.bartender-description {
-
-}
-
 .next-button {
   width: 100%;
   height: 20%;
 }
 
+@media only screen and (max-width: 1024px) {
+  .intro-title {
+    font-size: em(16);
+  }
+  .bartender-description-container {
+    font-size: em(10);
+  }
+}
 </style>

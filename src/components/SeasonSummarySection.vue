@@ -89,8 +89,8 @@
         v-for="bartender in bartenders" 
         :key="bartender.id" />
     </div>
+    <button class="next-season" @click="onNextPressed()">Next Season</button>
   </div><!-- container -->
-  <button class="next-season" @click="onNextPressed()">Next Season</button>
 </div><!-- wrapper -->
 </template>
 
@@ -169,6 +169,10 @@ export default Vue.component('season-summary-section', {
 </script>
 
 <style lang="scss">
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
 .positive-true {
   color: green;
 }
@@ -187,8 +191,8 @@ export default Vue.component('season-summary-section', {
   }
 }
 button.next-season {
-  width: 200px;
-  height: 80px;
+  width: em(200);
+  height: em(80);
   display: block;
   float: right;
 }
@@ -204,11 +208,11 @@ button.next-season {
 
 table.summary-table {
   margin: 0 auto;
-  border-spacing: 5px;
+  border-spacing: em(5);
 }
 tr.subcost {
   td.title, td.value {
-    font-size: 14px;
+    font-size: em(14);
   } 
 }
 th.value, td.value {
@@ -217,7 +221,16 @@ th.value, td.value {
 }
 th:first-child, td:first-child {
   text-align: right;
-  padding-right: 30px;
+  padding-right: em(30);
 }
 
+
+@media only screen and (max-width: 1024px) {
+  .summary-wrapper {
+    font-size: em(9)
+  }
+  table.summary-table {
+    border-spacing: 0;
+  }
+}
 </style>
