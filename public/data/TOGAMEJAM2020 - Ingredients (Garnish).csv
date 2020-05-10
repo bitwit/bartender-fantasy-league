@@ -1,17 +1,17 @@
-name,id,valueWinter,valueSummer,mixProperties,badMixProperties,triggeredEvents
-lemon peel,lemon-peel,4,5,citrus,,
-lime peel,lime-peel,4,5,citrus,,
-grapefruit peel,grapefruit-peel,5,4,citrus2,"meat, veg",
-orange peel,orange-peel,5,4,citrus2,"meat, veg",
-lime wheel,lime-wheel,2,5,citrus,cream,
-lemon wheel,lemon-wheel,2,5,citrus,"meat, cream",
-boozy cherry,boozy-cherry,7,3,orch,"meat, veg",
-mint,mint,2,7,herb,meat,
-banana dolphin,banana-dolphin,2,6,trop,"meat, veg",dolphin
-pineapple piece,pineapple-piece,2,6,orch,"meat, veg, cream",ferment
-olive,olive,5,5,veg,meat,
-maraschino cherry,maraschino-cherry,7,7,candy,"meat, veg",
-sugarless bear gummy,sugarless-bear-gummy,2,3,candy,"meat, veg",sugarless
-pepperette,pepperette,1,1,meat,,
-candied ginger,candied-ginger,4,4,candy,"meat, veg",
-none,none,4,4,nogarnish,,
+name,id,imageId,valueWinter,valueSummer,mixProperties,badMixProperties,triggeredEvents
+lemon peel,lemon-peel,lemon-peel,4,5,citrus,,
+lime peel,lime-peel,lime-peel,4,5,citrus,,
+grapefruit peel,grapefruit-peel,grapefruit-peel,5,4,citrus2,"meat, veg",
+orange peel,orange-peel,orange-peel,5,4,citrus2,"meat, veg",
+lime wheel,lime-wheel,lime-wheel,2,5,citrus,cream,
+lemon wheel,lemon-wheel,lemon-wheel,2,5,citrus,"meat, cream",
+boozy cherry,boozy-cherry,boozy-cherry,7,3,orch,"meat, veg",
+mint,mint,mint,2,7,herb,meat,
+banana dolphin,banana-dolphin,banana-dolphin,2,6,trop,"meat, veg",dolphin
+pineapple piece,pineapple-piece,pineapple-piece,2,6,orch,"meat, veg, cream",ferment
+olive,olive,olive,5,5,veg,meat,
+maraschino cherry,maraschino-cherry,maraschino-cherry,7,7,candy,"meat, veg",
+sugarless bear gummy,sugarless-bear-gummy,sugarless-bear-gummy,2,3,candy,"meat, veg",sugarless
+pepperette,pepperette,pepperette,1,1,meat,,
+candied ginger,candied-ginger,candied-ginger,4,4,candy,"meat, veg",
+none,none,none,4,4,nogarnish,,

@@ -1,17 +1,17 @@
-name,id,valueWinter,valueSummer,mixProperties,badMixProperties,triggeredEvents
-soda,soda,4,7,bubble,,
-ginger beer,ginger beer,5,6,bubble,"meat, veg, cream",
-cola,cola,5,4,bubble,"meat, veg",diet
-light beer,light beer,3,7,beer,"dark, herb, cream",
-dark beer,dark beer,7,2,beer,"white, herb, cream",
-plastic sword,plastic sword,7,7,ined,nogarnish,lawsuit
-straw,straw,1,1,ined,,turtles
-powdered sugar,powdered sugar,4,4,candy,"veg, meat",
-fire,fire,7,7,ined,,fire
-sparkling wine,sparkling wine,4,4,bubble,"veg, meat, cream",
-angostura bitters,angostura bitters,4,4,spice,"white, veg",
-salt,salt,4,4,salt,"coffee, cream",
-sugar rim,sugar rim,2,2,candy,"veg, meat, ",
-hickory smoke,hickory smoke,7,3,spice,,
-celery,celery,6,4,veg,"coffee, cream, dark, candy, bubble, orch",
-none,none,4,4,,,
+name,id,imageId,valueWinter,valueSummer,mixProperties,badMixProperties,triggeredEvents
+soda,soda,soda,4,7,bubble,,
+ginger beer,ginger-beer,ginger-beer,5,6,bubble,"meat, veg, cream",
+cola,cola,cola,5,4,bubble,"meat, veg",diet
+light beer,light-beer,light-beer,3,7,beer,"dark, herb, cream",
+dark beer,dark-beer,dark-beer,7,2,beer,"white, herb, cream",
+plastic sword,plastic-sword,plastic-sword,7,7,ined,nogarnish,lawsuit
+straw,straw,straw,1,1,ined,,turtles
+powdered sugar,powdered-sugar,powdered-sugar,4,4,candy,"veg, meat",
+fire,fire,fire,7,7,ined,,fire
+sparkling wine,sparkling-wine,sparkling-wine,4,4,bubble,"veg, meat, cream",
+bitters,bitters,bitters,4,4,spice,"white, veg",
+salt,salt,salt,4,4,salt,"coffee, cream",
+sugar rim,sugar rim,sugar rim,2,2,candy,"veg, meat, ",
+tobacco,tobacco,tobacco,7,3,tobacco,,tobacco
+celery,celery,celery,6,4,veg,"coffee, cream, dark, candy, bubble, orch",
+none,none,none,4,4,,,

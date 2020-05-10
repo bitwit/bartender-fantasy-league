@@ -9,7 +9,7 @@
         :key="ingredient.id">
         <div class="ingredient" 
           :class="ingredientClass(index)" 
-          :style="ingredientStyles"
+          :style="ingredientStyles(index)"
           @click="onIngredientSelected(index)">
           <h3>{{ingredient.name}}</h3>
         </div>
@@ -45,11 +45,6 @@ export default Vue.component('drink-building-section', {
     categories: function (state: AppState) {
       //TODO: randomize the order of categories and ingredients
       return state.ingredientCategories
-    },
-    ingredientStyles: function() {
-      return {
-        'background-image': `url(./img/default-${this.category.id}.png)`,
-      } 
     }
   }),
   methods: {
@@ -75,6 +70,12 @@ export default Vue.component('drink-building-section', {
       let obj: any = {}
       obj[`selected-${this.currentCategoryIngredientIndex == index}`] = true
       return obj
+    },
+    ingredientStyles: function(index: number) {
+      let ingredient = this.limitedOptions[index]
+      return {
+        'background-image': `url(./img/ingredient-${ingredient.imageId}.png)`,
+      } 
     },
     nextCategory: function() {
       this.currentCategoryIndex++ 
