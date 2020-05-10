@@ -77,8 +77,8 @@
           <th class="value">${{results.retainedEarnings | number}}</th>
         </tr>
         <tr>
-          <td class="title">Average Daily Earnings</td>
-          <td class="value">${{results.averageEarningsPerDay | number}}</td>
+          <td class="title">Average Weekly Earnings</td>
+          <td class="value">${{results.averageEarningsPerWeek | number}}</td>
         </tr>
 
       </table>
@@ -127,7 +127,7 @@ export default Vue.component('season-summary-section', {
         taxes: 0,
         taxRate: 0,
         retainedEarnings: 0,
-        averageEarningsPerDay: 0
+        averageEarningsPerWeek: 0
       }
       let season = state.seasons[state.currentSeasonIndex] 
       season.results.forEach((result) => {
@@ -141,7 +141,7 @@ export default Vue.component('season-summary-section', {
       seasonResults.avgRevenuePerDrink = seasonResults.totalDrinkRevenue / seasonResults.drinksSold
       seasonResults.avgCostPerDrink = state.businessObject.stats.costPerDrink
       seasonResults.taxRate = 100 * state.businessObject.stats.taxRate
-      seasonResults.averageEarningsPerDay = seasonResults.retainedEarnings / season.results.length
+      seasonResults.averageEarningsPerWeek = seasonResults.retainedEarnings / season.results.length
 
       season.eventsAccepted.forEach((event) => {
         if (event.cash > 0) {
