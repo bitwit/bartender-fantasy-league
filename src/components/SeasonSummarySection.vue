@@ -84,12 +84,14 @@
       </table>
     </div>
     <div class="bartenders-row">
-      <bartender-character 
-        :bartender="bartender" 
-        v-for="bartender in bartenders" 
-        :key="bartender.id" />
+      <div class="container">
+        <bartender-character 
+          :bartender="bartender" 
+          v-for="bartender in bartenders" 
+          :key="bartender.id" />
+      </div>
+      <button class="next-season game-start" @click="onNextPressed()">Next Season</button>
     </div>
-    <button class="next-season" @click="onNextPressed()">Next Season</button>
   </div><!-- container -->
 </div><!-- wrapper -->
 </template>
@@ -185,7 +187,9 @@ $browser-context: 16; // Default
 }
 
 .bartenders-row {
-  display: flex;
+  .container {
+    display: flex;
+  }
   .bartender-character {
     flex-basis: 33%;
   }
