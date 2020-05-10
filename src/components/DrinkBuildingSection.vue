@@ -4,7 +4,9 @@
 
     <h2>Pick your {{category.name}}</h2>
     <div class="ingredients-container">
-      <div class="ingredient-container" v-for="(ingredient, index) in category.ingredients" :key="ingredient.id">
+      <div class="ingredient-container" 
+        v-for="(ingredient, index) in limitedOptions" 
+        :key="ingredient.id">
         <div class="ingredient" 
           :class="ingredientClass(index)" 
           :style="ingredientStyles"
@@ -22,14 +24,19 @@ import Vuex from 'vuex'
 import IngredientCategory from '../classes/IngredientCategory'
 import Ingredient from '../classes/Ingredient'
 import AppState from '../AppState'
+import { shuffle } from '../utilities'
 
 export default Vue.component('drink-building-section', {
   data: function() {
     return {
       currentCategoryIndex: 0,
       currentCategoryIngredientIndex: -1,
-      ingredientSelections: <Ingredient[]>[]
+      ingredientSelections: <Ingredient[]>[],
+      limitedOptions: <Ingredient[]>[],
     }
+  },
+  created: function () {
+    this.selectIngredientOptions()
   },
   computed: Vuex.mapState({
     category: function () {
@@ -46,6 +53,12 @@ export default Vue.component('drink-building-section', {
     }
   }),
   methods: {
+    selectIngredientOptions: function () {
+      let shuffledOptions = shuffle(this.categories[this.currentCategoryIndex].ingredients)
+      let limitedOptions = shuffledOptions.slice(0, 8)
+      console.log('limited options', limitedOptions)
+      this.limitedOptions = limitedOptions
+    },
     ingredientClass: function(index: number) {
       let obj: any = {}
       obj[`selected-${this.currentCategoryIngredientIndex == index}`] = true
@@ -56,12 +69,13 @@ export default Vue.component('drink-building-section', {
       if (this.currentCategoryIndex >= this.categories.length) {
         this.onIngredientSelectionComplete()
       } else {
+        this.selectIngredientOptions()
         this.currentCategoryIngredientIndex = -1
       }
     },
     onIngredientSelected: function(index: number) {
         this.currentCategoryIngredientIndex = index
-        this.ingredientSelections.push(this.category.ingredients[index])
+        this.ingredientSelections.push(this.limitedOptions[index])
         this.$store.commit('setSpecialDrink', this.ingredientSelections)
         this.nextCategory()
     },
@@ -84,7 +98,7 @@ export default Vue.component('drink-building-section', {
 }
 
 .ingredient-container {
-  width: 16.6%;
+  width: 25%;
 }
 
 .ingredient {

@@ -5,7 +5,7 @@
       <table class="summary-table">
         <tr>
           <th class="title">Drink Special Results</th>
-          <th class="positive-true">xx</th>
+          <th class="positive-true">{{results.drinkRating}}/5</th>
         </tr>
         <tr>
           <td class="title">Drinks Sold</td>
@@ -113,6 +113,7 @@ export default Vue.component('season-summary-section', {
   computed: Vuex.mapState({
     results: function (state: AppState) {
       let seasonResults = {
+        drinkRating: state.drinkRating(),
         revenueFromEvents: 0,
         lossesFromEvent: 0,
         drinksSold: 0,

@@ -3,22 +3,47 @@
     <h2 :class="typeClass" class="event-title">
       <span class="title">{{event.name}}</span>
     </h2>
-    <div class="oi"></div>
     <p class="description">{{event.description}}</p>
-    <button :class="typeClass" @click="acceptEvent()" class="accept">
-      <span class="title oi">{{event.acceptText}}</span>
-      <br>
-      <span class="hotkey-button">space</span>
-    </button>
-    <button 
-      v-if="event.isRejectable"
-      :class="typeClass" 
-      @click="rejectEvent()" 
-      class="reject">
-      <span class="title oi">{{event.rejectText}}</span>
-      <br>
-      <span class="hotkey-button">esc</span>
-    </button>
+
+    <!-- event costs -->
+    <div class="cost-info positive-false" v-if="event.cash < 0">
+      <span>Loss: ${{Math.abs(event.cash)}}</span>
+    </div>
+    <div class="cost-info positive-true" v-if="event.cash > 0">
+      <span>Gain: ${{Math.abs(event.cash)}}</span>
+    </div>
+    <div v-if="event.hidesModHints == false">
+      <div class="cost-info positive-true" v-if="event.baseCustomersMod > 0">
+        <span>Gain New Customers</span>
+      </div>
+      <div class="cost-info positive-false" v-if="event.baseCustomersMod < 0">
+        <span>Lose Some Customers</span>
+      </div>
+      <div class="cost-info" v-if="event.priceMod > 0">
+        <span>Drink Price Increase</span>
+      </div>
+      <div class="cost-info positive-false" v-if="event.priceMod < 0">
+        <span>Drink Price Decrease</span>
+      </div>
+    </div>
+    <!-- /event costs -->
+
+    <div class="buttons-container">
+      <button :class="typeClass" @click="acceptEvent()" class="accept">
+        <span class="title">{{event.acceptText}}</span>
+        <br>
+        <span class="hotkey-button">space</span>
+      </button>
+      <button 
+        v-if="event.isRejectable"
+        :class="typeClass" 
+        @click="rejectEvent()" 
+        class="reject">
+        <span class="title oi">{{event.rejectText}}</span>
+        <br>
+        <span class="hotkey-button">esc</span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -100,7 +125,13 @@ div.announcement {
   div.announcement p.description {
     font-size: 1.75em;
     color: #333;
-    margin-top: 0.625em; }
+    margin: 0 }
+
+  .cost-info {
+    margin: 6px 0;
+    font-size: 24px;
+  }
+
   /* line 593, style.sass */
   div.announcement button.accept, div.announcement button.reject {
     outline: none;
@@ -130,6 +161,9 @@ div.announcement {
       color: #333;
       font-size: 1em; }
   /* line 616, style.sass */
+  div.buttons-container {
+    display: flex;
+  }
   div.announcement button.accept {
     color: #b0ad64;
     margin-right: 5%; }

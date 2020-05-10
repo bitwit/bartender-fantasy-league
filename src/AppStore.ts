@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: new AppState(),
-  
+
   mutations: {
     superSpeedMode: function(state: AppState) {
       state.tickSpeed = 1

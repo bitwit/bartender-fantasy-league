@@ -82,10 +82,7 @@ export class BusinessObject {
     let playerMultiplier = state.selectedBartenders.reduce((sum, current) => { 
       return sum + current.multiplier 
     }, 0)
-    let cocktailMultiplier = state.drinkSpecial.reduce((sum, current) => { 
-      let value = season.isWinter ? current.valueWinter : current.valueSummer
-      return sum + value
-    }, 0)
+    let cocktailMultiplier = state.drinkMultiplier()
     let multiplier = playerMultiplier + cocktailMultiplier
     let drinksSold = baseDemand * multiplier / 10
     let revenue = (drinksSold * this.calculatePricePerDrink())

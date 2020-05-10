@@ -15,9 +15,9 @@ export default class Ingredient {
     this.name = data.name
     this.valueWinter = parseInt(data.valueWinter)
     this.valueSummer = parseInt(data.valueSummer)
-    this.mixProperties = data.mixProperties.split(",")
-    this.badMixProperties = data.badMixProperties.split(",")
-    this.triggeredEvents = data.triggeredEvents.split(",")
+    this.mixProperties = data.mixProperties.split(",").filter((x: string) => { return x != ""})
+    this.badMixProperties = data.badMixProperties.split(",").filter((x: string) => { return x != ""})
+    this.triggeredEvents = data.triggeredEvents.split(",").filter((x: string) => { return x != ""})
   }
 
 }

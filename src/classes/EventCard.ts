@@ -9,6 +9,7 @@ export default class EventCard {
   cost: number
   cash: number
   baseCustomersMod: number
+  hidesModHints: boolean
   priceMod: number // price per drink sold
   prerequisiteEvents: string[]
   prerequisiteBartender: string | null
@@ -28,6 +29,7 @@ export default class EventCard {
     this.cash = parseInt(data.cash || 0)
     this.baseCustomersMod = parseInt(data.baseCustomersMod || 0)
     this.priceMod = parseInt(data.priceCostMod || 0)
+    this.hidesModHints = data.hidesModHints === "1" ? true : false
     this.prerequisiteEvents = data.prerequisiteEvents.split(",").filter((x: string) => { return x != ""})
     this.prerequisiteBartender = data.prerequisiteBartender == "" ? null : data.prerequisiteBartender
     this.prerequisiteIngredient = data.prerequisiteIngredient == "" ? null : data.prerequisiteIngredient

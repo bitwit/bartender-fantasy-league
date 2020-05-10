@@ -92,4 +92,59 @@ export default class AppState {
       this.weeks.push(new Week(`${i}`, `Week ${i}`))
     }
   }
+
+  drinkRating() {
+    let rating = 3
+    let season = this.seasons[this.currentSeasonIndex]
+    this.drinkSpecial.forEach((current) => {
+      let isWinterIngredient = current.valueWinter > current.valueSummer
+      if (season.isWinter && isWinterIngredient) {
+        rating += 1
+      }
+      for(let ingredient of this.drinkSpecial) {
+        if (findCommonElement(ingredient.badMixProperties, current.mixProperties)) {
+          rating -= 1
+          console.log(`${ingredient.name} and ${current.name} don't mix well`)
+        }
+      }
+    })
+    if (rating > 5) { rating = 5 }
+    else if (rating < 1) { rating = 1 }
+    return rating
+  }
+
+  drinkMultiplier(): number {
+    let season = this.seasons[this.currentSeasonIndex]
+    return this.drinkSpecial.reduce((sum, current) => {
+      let value = season.isWinter ? current.valueWinter : current.valueSummer
+      for(let ingredient of this.drinkSpecial) {
+        if (findCommonElement(ingredient.badMixProperties, current.mixProperties)) {
+          value = 1
+          console.log(`${ingredient.name} and ${current.name} don't mix well`)
+        }
+      }
+      return sum + value
+    }, 0)
+  }
 }
+
+function findCommonElement<T>(array1: T[], array2: T[]): boolean { 
+  // Loop for array1 
+  for(let i = 0; i < array1.length; i++) { 
+        
+      // Loop for array2 
+      for(let j = 0; j < array2.length; j++) { 
+            
+          // Compare the element of each and 
+          // every element from both of the 
+          // arrays 
+          if(array1[i] === array2[j]) { 
+            
+              // Return if common element found 
+              return true; 
+          } 
+      } 
+  } 
+  // Return if no common element exist 
+  return false;  
+} 
