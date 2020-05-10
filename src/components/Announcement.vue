@@ -163,6 +163,7 @@ div.announcement {
   /* line 616, style.sass */
   div.buttons-container {
     display: flex;
+    justify-content: center;
   }
   div.announcement button.accept {
     color: #b0ad64;

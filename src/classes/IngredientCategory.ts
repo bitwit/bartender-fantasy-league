@@ -5,12 +5,18 @@ export default class IngredientCategory {
   name: string = ""
   description: string = ""
   ingredients: Ingredient[] = []
+  canSelectNone: boolean = false
 
   constructor(id: string, name: string, ingredientData: any[] = []) {
     this.id = id
     this.name = name
     for(let ingData of ingredientData) {
-      this.ingredients.push(new Ingredient(ingData))
+      let ingredient = new Ingredient(ingData)
+      if (ingredient.id == "none") {
+        this.canSelectNone = true
+      } else {
+        this.ingredients.push(ingredient)
+      }
     }
   }
 }

@@ -54,8 +54,20 @@ export default Vue.component('drink-building-section', {
   }),
   methods: {
     selectIngredientOptions: function () {
-      let shuffledOptions = shuffle(this.categories[this.currentCategoryIndex].ingredients)
-      let limitedOptions = shuffledOptions.slice(0, 8)
+      let category = this.categories[this.currentCategoryIndex] 
+      let shuffledOptions = shuffle(category.ingredients)
+      let limitedOptions
+      if(category.canSelectNone) {
+        limitedOptions = shuffledOptions.slice(0, 7)
+        limitedOptions.push(new Ingredient({
+          id: "none", 
+          name: "None", 
+          mixProperties: "", 
+          badMixProperties: ""
+        }))
+      } else {
+        limitedOptions = shuffledOptions.slice(0, 8)
+      }
       console.log('limited options', limitedOptions)
       this.limitedOptions = limitedOptions
     },
@@ -75,7 +87,10 @@ export default Vue.component('drink-building-section', {
     },
     onIngredientSelected: function(index: number) {
         this.currentCategoryIngredientIndex = index
-        this.ingredientSelections.push(this.limitedOptions[index])
+        let option = this.limitedOptions[index]
+        if(option.id != "none") {
+          this.ingredientSelections.push(option)
+        }
         this.$store.commit('setSpecialDrink', this.ingredientSelections)
         this.nextCategory()
     },
