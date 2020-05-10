@@ -57,6 +57,7 @@ export default Vue.component('drink-building-section', {
         limitedOptions.push(new Ingredient({
           id: "none", 
           name: "None", 
+          imageId: "none",
           mixProperties: "", 
           badMixProperties: ""
         }))
