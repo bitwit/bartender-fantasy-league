@@ -20,12 +20,28 @@ export default new Vuex.Store({
     },
     singleSeason: function(state: AppState) {
       state.seasons = [state.seasons[0]]
-      state.progressInterval = 3.0
       console.log("game is 1 season only")
     },
     addCash: function(state: AppState, amount: number) {
       state.businessObject.stats.cash += amount
       console.log("added cash", amount)
+    },
+    addIngredient: function(state: AppState, ingredientId: string) {
+      state.drinkSpecial.push(new Ingredient({ 
+        id: ingredientId, 
+        name: ingredientId, 
+        mixProperties: "", 
+        badMixProperties: ""
+      }))
+    },
+    triggerEvent: function(state: AppState, eventId: string) {
+      for(let event of state.events) {
+        if(event.id == eventId){
+          state.announcements.push(event)
+          state.isPaused = true
+          return;
+        }
+      }
     },
     /* //Debug */
     
@@ -36,6 +52,7 @@ export default new Vuex.Store({
       state.announcements.length = 0
     },
     switchView: function (state: AppState, newView: string) {
+      console.log('switch view', newView)
       state.currentView = newView
     },
     prepareForNextSeason: function (state: AppState) {
@@ -109,16 +126,18 @@ export default new Vuex.Store({
     acceptFirstEvent: function (state: AppState) {
       const event = state.announcements.shift()
       if(!event) { return }
-      event.onAccept(state.businessObject)
+      event.onAccept(state)
       state.businessObject.assets.unshift(event) // Add it to our current assets
       state.seasons[state.currentSeasonIndex].eventsAccepted.push(event)
     },
 
     rejectFirstEvent: function (state: AppState) {
       const event = state.announcements.shift()
-      event?.onReject(state.businessObject)
-      if (event) {
+      if (event && event.isRejectable) {
+        event.onReject(state)
         state.seasons[state.currentSeasonIndex].eventsRejected.push(event)
+      } else if(event) {
+        state.announcements.unshift(event)
       }
     },
 
@@ -166,12 +185,18 @@ export default new Vuex.Store({
 
     acceptEvent: function (context) {
       context.commit('acceptFirstEvent')
-      context.dispatch('resumeSimulation')
+      if(context.state.businessObject.flags.isFired) {
+        context.commit('processEndGame')
+      } else {
+        context.dispatch('resumeSimulation')
+      }
     },
 
     rejectEvent: function (context) {
       context.commit('rejectFirstEvent')
-      context.dispatch('resumeSimulation')
+      if(context.state.announcements.length == 0) {
+        context.dispatch('resumeSimulation')
+      }
     },
 
     resumeSimulation: function (context) {
@@ -185,11 +210,11 @@ export default new Vuex.Store({
       context.dispatch('startCountdown')
     },
     nextSeasonOrEnd: function (context) {
-      if( context.state.currentSeasonIndex >= context.state.seasons.length - 1) {
+      if(context.state.currentSeasonIndex >= context.state.seasons.length - 1) {
         context.commit('processEndGame')
       }
       else {
-        context.commit('nextSeason')
+        context.commit('switchView', 'drink-building')
       }
     }
   }

@@ -14,8 +14,15 @@ export default class EventCard {
   prerequisiteEvents: string[]
   prerequisiteBartender: string | null
   prerequisiteIngredient: string | null
-  minSeason: number
   minWeek: number
+  removeBartender: string | null
+  removeIngredient: string | null
+  forcesEnding: boolean  
+
+  acceptanceFlags: string[]
+  rejectionFlags: string[]
+  prerequisiteFlags: string[]
+
   isRejectable: boolean
   acceptText: string
   rejectText: string
@@ -33,8 +40,15 @@ export default class EventCard {
     this.prerequisiteEvents = data.prerequisiteEvents.split(",").filter((x: string) => { return x != ""})
     this.prerequisiteBartender = data.prerequisiteBartender == "" ? null : data.prerequisiteBartender
     this.prerequisiteIngredient = data.prerequisiteIngredient == "" ? null : data.prerequisiteIngredient
-    this.minSeason = parseInt(data.minSeason || 0)
     this.minWeek = parseInt(data.minWeek || 0)
+    this.removeBartender = data.removeBartender == "" ? null : data.removeBartender
+    this.removeIngredient = data.removeIngredient == "" ? null : data.removeIngredient
+    this.forcesEnding = data.forcesEnding === "1" ? true : false
+
+    this.acceptanceFlags = data.acceptanceFlags.split(",").filter((x: string) => { return x != ""})
+    this.rejectionFlags = data.rejectionFlags.split(",").filter((x: string) => { return x != ""})
+    this.prerequisiteFlags = data.prerequisiteFlags.split(",").filter((x: string) => { return x != ""})
+
     this.isRejectable = data.isRejectable === "1" ? true : false
     this.acceptText = data.acceptText == "" ? "OK" : data.acceptText
     this.rejectText = data.rejectText == "" ? "Pass" : data.rejectText
@@ -61,6 +75,12 @@ export default class EventCard {
     allAssets.forEach(a => { allAssetIds[a.id] = true })
     for(let prerequisite of this.prerequisiteEvents) {
       if (!allAssetIds[prerequisite]) {
+        return false
+      }
+    }
+
+    for(let flag of this.prerequisiteFlags) {
+      if(state.businessObject.eventFlags.indexOf(flag) === -1) {
         return false
       }
     }
@@ -101,12 +121,34 @@ export default class EventCard {
     }
   }
 
-  onAccept(business: BusinessObject) {
-    business.stats.cash += this.cash
+  onAccept(state: AppState) {
+    state.businessObject.stats.cash += this.cash
+    this.acceptanceFlags.forEach(x => {
+      state.businessObject.eventFlags.push(x)
+    })
+    if (this.removeBartender) {
+      let ids = state.selectedBartenders.map(x => { return x.id })
+      let index = ids.indexOf(this.removeBartender)
+      if( index !== -1) {
+        state.selectedBartenders.splice(index, 1)
+      }
+    }
+    if (this.removeIngredient) {
+      let ids = state.drinkSpecial.map(x => { return x.id })
+      let index = ids.indexOf(this.removeIngredient)
+      if( index !== -1) {
+        state.drinkSpecial.splice(index, 1)
+      }
+    }
+    if (this.forcesEnding) {
+      state.businessObject.flags.isFired = true
+    }
   }
 
-  onReject(business: BusinessObject) {
-
+  onReject(state: AppState) {
+    this.rejectionFlags.forEach(x => {
+      state.businessObject.eventFlags.push(x)
+    })
   }
 
   onDestroy(business: BusinessObject) {

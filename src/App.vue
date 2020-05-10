@@ -98,6 +98,12 @@ export default Vue.extend({
     debug.showMeTheMoney = (amount: number) => {
       this.$store.commit('addCash', amount)
     }
+    debug.addIngredient = (ingredient: string) => {
+      this.$store.commit('addIngredient', ingredient)
+    }
+    debug.triggerEvent = (name: string) => {
+      this.$store.commit('triggerEvent', name)
+    }
   },
   computed: Vuex.mapState({
     announcements: function (state: AppState) { return state.announcements },

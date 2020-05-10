@@ -19,11 +19,17 @@ class BusinessStats {
   ]
 }
 
+class BusinessFlags {
+  isFired = false
+}
+
 export class BusinessObject {
   stats: BusinessStats = new BusinessStats()
+  flags: BusinessFlags = new BusinessFlags()
 
   assets: EventCard[] = []
   expiredAssets: EventCard[] = []
+  eventFlags: string[] = []
 
   constructor() {
    

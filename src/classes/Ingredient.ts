@@ -8,16 +8,14 @@ export default class Ingredient {
 
   mixProperties: string[] = []
   badMixProperties: string[] = []
-  triggeredEvents: string[] = []
 
   constructor(data: any) {
     this.id = data.id
     this.name = data.name
-    this.valueWinter = parseInt(data.valueWinter)
-    this.valueSummer = parseInt(data.valueSummer)
+    this.valueWinter = parseInt(data.valueWinter) || 1
+    this.valueSummer = parseInt(data.valueSummer) || 1
     this.mixProperties = data.mixProperties.split(",").filter((x: string) => { return x != ""})
     this.badMixProperties = data.badMixProperties.split(",").filter((x: string) => { return x != ""})
-    this.triggeredEvents = data.triggeredEvents.split(",").filter((x: string) => { return x != ""})
   }
 
 }
