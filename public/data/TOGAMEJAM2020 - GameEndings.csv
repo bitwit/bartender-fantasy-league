@@ -1,0 +1,8 @@
+name,id,minimumCash,minimumCustomersServed,requiredEvents,priority,endText
+,,,,,,
+Baijiu.  Really?,fired,0,0,baijiu,10,"You just got fired standing up for baijiu.  BAIJIU! Good luck kid, you're going to need it"
+The Worst Kind of Cake,lie,0,0,cake,10,There was no cake.  It was all a lie. You've been fired
+Failure!,failure,0,,,1,"59% of all bars fail in the first 3 years.  Great job, you're part of a statistic!"
+Barely Making Rent,barely-rent,1000000,,,2,The owner can barely afford his yacht payments.  This is on you!
+Cool Bar,cool-bar,2000000,,,3,
+Great Success!,great-success,5000000,,,4,

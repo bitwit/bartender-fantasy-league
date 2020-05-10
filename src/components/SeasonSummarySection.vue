@@ -162,7 +162,7 @@ export default Vue.component('season-summary-section', {
   }),
   methods: {
     onNextPressed: function () {
-      this.$store.commit('switchView', 'drink-building')
+      this.$store.dispatch('nextSeasonOrEnd')
     }
   }
 })

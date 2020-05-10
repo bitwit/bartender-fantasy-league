@@ -2,21 +2,20 @@
   <div class="end-view view-container">
     <div class="ending">
       <h2 class="end-title">{{ending.name}}</h2>
-      <span :data-glyph="ending.icon" class="oi ending-icon"></span>
-      <p class="ending-description">{{ending.description}}</p>
+      <span class="ending-icon"></span>
+      <p class="ending-description">{{ending.endText}}</p>
+
       <div class="cash">
         <h3 :class="cashValuePositiveClass" class="cash-title">
           <span class="title">Final Cash</span>
         </h3>
-        <strong :class="cashValuePositiveClass" class="cash-value">{{game.stats.cash | number}}</strong>
-        <h3 :class="projectedValuePositiveClass" class="cash-title">
-          <span class="title">Final Valuation</span>
-        </h3>
-        <strong :class="projectedValuePositiveClass" class="cash-value">{{game.stats.projectedValue | number}}</strong>
+        <strong :class="cashValuePositiveClass" class="cash-value">${{game.stats.cash | number}}</strong>
       </div>
+
       <h3 class="end-title">Game Over</h3>
+
       <button @click="restart()" class="game-start">
-        <span data-glyph="reload" class="title oi">&nbsp;Restart</span>
+        <span class="title">&nbsp;Restart</span>
       </button>
     </div>
   </div>
@@ -31,7 +30,10 @@ export default Vue.component('end-section', {
   filters: {
     number: function (value: string, decimals: string) {
       if (!value) { return '' } 
-      return parseFloat(value).toFixed(parseInt(decimals))
+      return parseFloat(value)
+        .toFixed(parseInt(decimals))
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     }
   },
   computed: Vuex.mapState({

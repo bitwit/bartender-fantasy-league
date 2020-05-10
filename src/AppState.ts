@@ -24,6 +24,7 @@ export default class AppState {
   bartenders: Bartender[] = []
   ingredientCategories: IngredientCategory[] = []
   events: EventCard[] = []
+  endings: VictoryCondition[] = []
 
   currentView = 'intro'
   announcements: EventCard[] = []
@@ -50,23 +51,24 @@ export default class AppState {
     /* CSV Loading */
     let bartenders = httpGet('./data/TOGAMEJAM2020 - Bartenders.csv')
     let events = httpGet('./data/TOGAMEJAM2020 - Events.csv')
+    let endings = httpGet('./data/TOGAMEJAM2020 - GameEndings.csv')
     let spirits = httpGet('./data/TOGAMEJAM2020 - Ingredients (Spirits).csv')
     let garnish = httpGet('./data/TOGAMEJAM2020 - Ingredients (Garnish).csv')
     let misc = httpGet('./data/TOGAMEJAM2020 - Ingredients (Misc).csv')
     let mods = httpGet('./data/TOGAMEJAM2020 - Ingredients (Mods).csv')
     let fruit = httpGet('./data/TOGAMEJAM2020 - Ingredients (Fruit).csv')
 
-    let csv = CSVtoJSON()
     Promise.all([
       CSVtoJSON().fromString(bartenders),
       CSVtoJSON().fromString(events),
+      CSVtoJSON().fromString(endings),
       CSVtoJSON().fromString(spirits),
       CSVtoJSON().fromString(mods),
       CSVtoJSON().fromString(fruit),
       CSVtoJSON().fromString(misc),
       CSVtoJSON().fromString(garnish),
     ])
-    .then(([bartenders, events, spirits, mods, fruits, miscs, garnishes]) => {
+    .then(([bartenders, events, endings, spirits, mods, fruits, miscs, garnishes]) => {
       this.ingredientCategories = [
         new IngredientCategory("spirits", "Spirits", spirits),
         new IngredientCategory("mods", "Mods", mods),
@@ -80,9 +82,13 @@ export default class AppState {
       }
 
       let cleanEvents = events.filter((x:any) => { return x.id != "" })
-      console.log('cleanEvents', cleanEvents.map(x => { return x.id }))
       for(let data of cleanEvents) {
         this.events.push(new EventCard(data))
+      }
+
+      let cleanEndings = endings.filter((x:any) => { return x.id != "" })
+      for(let data of cleanEndings) {
+        this.endings.push(new VictoryCondition(data))
       }
     })
   }

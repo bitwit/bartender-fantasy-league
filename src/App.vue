@@ -92,6 +92,12 @@ export default Vue.extend({
     debug.superSpeed = () => {
       this.$store.commit('superSpeedMode')
     }
+    debug.singleSeason = () => {
+      this.$store.commit('singleSeason')
+    }
+    debug.showMeTheMoney = (amount: number) => {
+      this.$store.commit('addCash', amount)
+    }
   },
   computed: Vuex.mapState({
     announcements: function (state: AppState) { return state.announcements },

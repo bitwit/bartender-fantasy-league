@@ -125,21 +125,20 @@ export class BusinessObject {
     console.log('Season Complete')
   }
 
-  processEndGame() {
-    return new VictoryCondition("The End", "test-end", "ico")
-    // let validConditions: VictoryCondition[] = []
-    // for(let condition of victoryConditions) {
-    //   if(condition.hasBusinessMetConditions(this)) {
-    //     validConditions.push(condition)
-    //   }
-    // }
-    // let selectedCondition = validConditions[0]
-    // for(let condition of validConditions) {
-    //   if(condition.priority > selectedCondition.priority) {
-    //     selectedCondition = condition
-    //   }
-    // }
-    // return selectedCondition
+  processEndGame(state: AppState) {
+    let validConditions: VictoryCondition[] = []
+    for(let condition of state.endings) {
+      if(condition.hasBusinessMetConditions(state)) {
+        validConditions.push(condition)
+      }
+    }
+    let selectedCondition = validConditions[0]
+    for(let condition of validConditions) {
+      if(condition.priority > selectedCondition.priority) {
+        selectedCondition = condition
+      }
+    }
+    return selectedCondition
   }
 
 }

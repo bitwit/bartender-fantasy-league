@@ -12,11 +12,22 @@ export default new Vuex.Store({
   state: new AppState(),
 
   mutations: {
+    /* Debug */
     superSpeedMode: function(state: AppState) {
       state.tickSpeed = 1
       state.progressInterval = 3.0
       console.log("super speed activated!")
     },
+    singleSeason: function(state: AppState) {
+      state.seasons = [state.seasons[0]]
+      state.progressInterval = 3.0
+      console.log("game is 1 season only")
+    },
+    addCash: function(state: AppState, amount: number) {
+      state.businessObject.stats.cash += amount
+      console.log("added cash", amount)
+    },
+    /* //Debug */
     
     resetCountdown: function (state: AppState) {
       state.countdownProgress = 0 
@@ -112,7 +123,7 @@ export default new Vuex.Store({
     },
 
     processEndGame: function (state: AppState) {
-      const endResult = state.businessObject.processEndGame()
+      const endResult = state.businessObject.processEndGame(state)
       state.ending = endResult
       state.currentView = 'end'
     }
@@ -145,11 +156,7 @@ export default new Vuex.Store({
     tick: function (context) {
       context.commit('tick')
       if(context.state.currentWeekIndex >= context.state.weeks.length) {
-        if( context.state.currentSeasonIndex >= context.state.seasons.length) {
-          context.commit('processEndGame')
-        } else {
           context.commit('prepareForNextSeason')
-        }
       } else if(!context.state.isPaused) {
         setTimeout(() => {
           context.dispatch('tick')
@@ -176,6 +183,14 @@ export default new Vuex.Store({
     nextSeason: function (context) {
       context.commit('nextSeason')
       context.dispatch('startCountdown')
+    },
+    nextSeasonOrEnd: function (context) {
+      if( context.state.currentSeasonIndex >= context.state.seasons.length - 1) {
+        context.commit('processEndGame')
+      }
+      else {
+        context.commit('nextSeason')
+      }
     }
   }
 })
