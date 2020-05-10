@@ -1,6 +1,8 @@
 <template>
   <div class="intro-wrapper">
     <div class="intro-text-area">
+      <img class="logo" src="../../public/img/logo.png" />
+      <h1>Bartender Fantasy League</h1>
       <p>
         Live out your dream of being a bar manager in all it's glory.
         <br />
@@ -65,6 +67,16 @@ export default Vue.component('intro-section', {
   flex-basis: 40%;
   text-align: left;
 }
+img.logo {
+  display: block;
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 28px;
+}
+
 .bar-name-area {
   flex-basis: 40%;
   display: flex;
