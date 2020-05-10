@@ -12,18 +12,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Mood from '../enums/Mood'
 
-function randomMood()  {
-  let moods = [Mood.Happy, Mood.Neutral, Mood.Sad]
-  return moods[Math.floor(Math.random() * moods.length)]
-}
-
 export default Vue.component('patron-character', {
   props: {
     index: Number,
+    mood: String
   },
   data: function() { 
     return {
-      mood: randomMood(),
       positionTop: 0,
       positionLeft: 0
     }
@@ -55,7 +50,6 @@ export default Vue.component('patron-character', {
     startTimer: function () {
       let timeout = Math.random() * 30000 + 10
       setTimeout( () => {
-        this.mood = randomMood()
         this.positionTop = (Math.random() * 400) - 200
         this.positionLeft = (Math.random() * 60) - 30
         this.startTimer()

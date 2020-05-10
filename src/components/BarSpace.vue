@@ -3,7 +3,8 @@
     <div class="upper-left-bar-space">
       <div v-if="currentView == 'main'">
         <patron-character 
-          v-for="(patron, index) in upperLeftPatrons" 
+          :mood="patron.mood"
+          v-for="(patron, index) in patronDistribution.upperLeftPatrons" 
           :key="index" 
           :index="index"/>
       </div>
@@ -28,7 +29,8 @@
     <div class="upper-right-bar-space">
       <div v-if="currentView == 'main'">
         <patron-character 
-          v-for="(patron, index) in upperRightPatrons" 
+          :mood="patron.mood"
+          v-for="(patron, index) in patronDistribution.upperRightPatrons" 
           :key="index" 
           :index="index"/>
       </div>
@@ -36,7 +38,8 @@
     <div class="lower-left-bar-space">
       <div v-if="currentView == 'main'">
         <patron-character 
-          v-for="(patron, index) in lowerLeftPatrons" 
+          :mood="patron.mood"
+          v-for="(patron, index) in patronDistribution.lowerLeftPatrons" 
           :key="index" 
           :index="index"/>
       </div>
@@ -44,7 +47,8 @@
     <div class="lower-center-bar-space">
       <div v-if="currentView == 'main'">
         <patron-character 
-          v-for="(patron, index) in lowerCenterPatrons" 
+          :mood="patron.mood"
+          v-for="(patron, index) in patronDistribution.lowerCenterPatrons" 
           :key="index" 
           :index="index"/>
       </div>
@@ -52,7 +56,8 @@
     <div class="lower-right-bar-space">
       <div v-if="currentView == 'main'">
         <patron-character 
-          v-for="(patron, index) in lowerRightPatrons" 
+          :mood="patron.mood"
+          v-for="(patron, index) in patronDistribution.lowerRightPatrons" 
           :key="index" 
           :index="index"/>
       </div>
@@ -64,40 +69,58 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import AppState from '../AppState'
+import Mood from '../enums/Mood'
+
+interface Chances {
+  happy: number
+  sad: number
+  party: number
+  drunk: number
+}
+
+function makePatrons(count: number, chances: Chances): any[] {
+  let patrons: any[] = []
+  let mood = "neutral"
+  if (Math.random() < chances.happy) { mood = Mood.Happy }
+  if (Math.random() < chances.sad) { mood = Mood.Sad }
+
+  for(let i = 0; i < count; i++) {
+    patrons.push({ 
+      id: "${index}",
+      mood: mood
+    })
+  }
+  return patrons
+}
 
 export default Vue.component('bar-space', {
-  data: function() { 
-    return {
-      upperLeftPatrons: <any[]>[
-        {id: "1"},
-        {id: "2"},
-      ],
-      upperRightPatrons: <any[]>[
-        {id: "1"},
-        {id: "2"},
-      ],
-      lowerLeftPatrons: <any[]>[
-        {id: "1"},
-        {id: "2"},
-      ],
-      lowerCenterPatrons: <any[]>[
-        {id: "1"},
-        {id: "2"},
-        {id: "3"},
-        {id: "4"},
-        {id: "5"},
-        {id: "6"},
-      ],
-      lowerRightPatrons: <any[]>[
-        {id: "1"},
-        {id: "2"},
-      ],
-    }
-  },
   computed: Vuex.mapState({
     bartenders: function(state: AppState) { return state.selectedBartenders },
     currentView: function (state: AppState) { return state.currentView },
     drinkSpecial: function (state: AppState) { return state.drinkSpecial },
+    patronDistribution: function(state: AppState) {
+      let basePatrons = 2
+      let drinkPatrons = state.drinkRating() * 3
+      let eventPatrons = 0
+      for(let event of state.businessObject.assets) {
+        eventPatrons += event.baseCustomersMod
+      }
+      let totalPatrons = basePatrons + drinkPatrons + eventPatrons
+      totalPatrons = Math.min(Math.max(1, totalPatrons), 20)
+      let chances: Chances = {
+        happy: (0.5) + (state.drinkRating() / 10), //perfect rating means everyoen happy
+        sad: (0.5) - (state.drinkRating() / 10), //perfect rating means noone is sad
+        party: 0.1,
+        drunk: 0.4
+      }
+      return {
+        upperLeftPatrons: makePatrons(Math.floor(totalPatrons / 10), chances),
+        upperRightPatrons: makePatrons(Math.floor(totalPatrons / 10), chances),
+        lowerLeftPatrons: makePatrons(Math.floor(totalPatrons / 10), chances),
+        lowerCenterPatrons: makePatrons(Math.ceil(totalPatrons / 2), chances),
+        lowerRightPatrons: makePatrons(Math.floor(totalPatrons / 10), chances),
+      }
+    }
   }),
   methods: {
     ingredientStyles: function (index: number) {
@@ -106,7 +129,7 @@ export default Vue.component('bar-space', {
         'background-image': `url(./img/ingredient-${ingredient.imageId}.png)`,
       } 
     },
-    patronStyles: function (index: number) {
+    patronStyles: function (index: number, mood: string) {
       return {
         top: `${Math.random() * 100}px`,
         left: `${index * 120}px`,
