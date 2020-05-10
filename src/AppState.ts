@@ -14,10 +14,10 @@ export default class AppState {
   seasons: Season[] = [
     new Season("1", "Year 1 Season 1 - Fall/Winter", true),
     new Season("2", "Year 1 Season 2 - Spring/Summer"),
-    new Season("3", "Year 2 Season 1 - Fall/Winter", true),
-    new Season("4", "Year 2 Season 2 - Spring/Summer"),
-    new Season("5", "Year 3 Season 1 - Fall/Winter", true),
-    new Season("6", "Year 3 Season 2 - Spring/Summer")
+    new Season("3", "Year 2 Season 3 - Fall/Winter", true),
+    new Season("4", "Year 2 Season 4 - Spring/Summer"),
+    new Season("5", "Year 3 Season 5 - Fall/Winter", true),
+    new Season("6", "Year 3 Season 6 - Spring/Summer")
   ]
   weeks: Week[] = []
 

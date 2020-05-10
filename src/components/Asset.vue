@@ -22,5 +22,7 @@ export default Vue.component('asset', {
 })
 </script>
 <style lang="scss">
-
+.asset {
+  margin: 0.625em 0;
+}
 </style

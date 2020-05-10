@@ -7,6 +7,16 @@
         </h3>
         <strong :class="cashValuePositiveClass" class="cash-value">${{game.stats.cash | number(0)}}</strong>
     </div>
+    <!-- <div class="earnings">
+      <h2 class="section-title"><br><span class="title">Recent Weekly Earnings</span></h2>
+      <div class="earnings-container">
+        <transition-group name="asset-list" tag="div">
+          <div v-for="earnings in recentEarnings" :key="earnings.id">
+            {{earnings.value}}
+          </div>
+        </transition-group>
+      </div>
+    </div> -->
     <div class="assets">
       <h2 class="section-title"><br><span class="title">Assets</span></h2>
       <div class="assets-container">
@@ -35,7 +45,19 @@ export default Vue.component('game-stats-section', {
   },
   computed: Vuex.mapState({
     game: function (state: AppState) { return state.businessObject },
-
+    recentEarnings: function (state: AppState) { 
+      let allResults = state.seasons[state.currentSeasonIndex].results
+      let recentEarnings = allResults.slice(3, allResults.length - 3)
+      let index = allResults.length - 3
+      console.log('recent earnings', recentEarnings)
+      return recentEarnings.map(x => { 
+        index++
+        return { 
+          id: index,
+          value: x.retainedEarnings 
+        }
+      })
+    },
     cashValuePositiveClass: function (state: AppState) {
       const obj: any = {}
       obj[`positive-${state.businessObject.stats.cash > 0}`] = true
